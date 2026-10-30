@@ -40,11 +40,21 @@ Rust ve GPUI Kit ile geliştirilen; Windows bakımı, ince ayar, uygulama yönet
 
 Tüm düğmeler GPUI Kit'in odak sistemiyle klavyeden kullanılabilir; onay panelleri “Vazgeç” düğmesiyle kapatılır. Ekran okuyucular için AccessKit semantiği ve erişilebilir adlar sağlanır.
 
-## Hazır Uygulama
+## İndir
 
-`release` klasöründeki `WinNexus_beta-vYYYYMMDDHHMM.exe` dosyası kurulum gerektirmez ve doğrudan çalıştırılır. Klasörde yalnızca en güncel sürüm bulundurulur; her release derlemesinde önceki sürümler otomatik olarak kaldırılır. Dosya adındaki `vYYYYMMDDHHMM` damgası derleme anını gösterir ve uygulama içindeki sürüm etiketiyle aynıdır.
+Kurulum gerektirmeyen portatif Windows uygulaması her sürümde GitHub Releases üzerinden yayınlanır:
 
-Release derlemesi `requireAdministrator` manifesti içerir; ilk açılışta Windows UAC onayı istenir. Geliştirme derlemesi bu manifesti içermez.
+- **En güncel sürüm:** https://github.com/spgroupenerji/app-winnexus/releases/latest
+- **Doğrudan indirme:** https://github.com/spgroupenerji/app-winnexus/releases/latest/download/WinNexus_beta.exe
+- **SHA-256:** https://github.com/spgroupenerji/app-winnexus/releases/latest/download/WinNexus_beta.exe.sha256
+
+İndirdikten sonra bütünlüğü doğrulayın:
+
+```powershell
+(Get-FileHash -Algorithm SHA256 .\WinNexus_beta.exe).Hash
+```
+
+Release derlemesi `requireAdministrator` manifesti içerir; ilk açılışta Windows UAC onayı istenir. Geliştirme derlemesi bu manifesti içermez. `release` klasörü yerel derleme çıktısı içindir; depoda ikili dosya tutulmaz.
 
 ## Kaynaktan Derleme
 

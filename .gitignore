@@ -1,3 +1,50 @@
+# Rust derleme çıktıları
 /target
 /.cargo-home
 *.log
+*.pdb
+
+# Dağıtım ve çalışma zamanı verisi (portatif çalışma exe yanında üretir)
+/release/*.exe
+/release/*.sha256
+/release/settings.toml
+/release/veri/
+/veri/
+/settings.toml
+
+# Yerel araç indeksleri (yeniden üretilebilir; her geliştirici kendi indeksini kurar)
+/.gitnexus/
+/.codegraph/
+/graphify-out/
+/graft/
+
+# Ajan araçlarının ürettiği dosyalar
+/.claude/*
+!/.claude/skills/
+/CLAUDE.md
+
+# Yerel doğrulama artefaktları (scripts/ui-*.ps1 üretir); README'de kullanılan 8 görsel izlenir
+/tests/ui-*.png
+!tests/ui-arac-merkezi.png
+!tests/ui-arac-merkezi-tarama-guncelleme.png
+!tests/ui-android.png
+!tests/ui-android-surucu.png
+!tests/ui-android-uad.png
+!tests/ui-arac-merkezi-tarama-baglanti.png
+!tests/ui-arac-merkezi-izleme-raporu.png
+!tests/ui-release.png
+/tests/exe-icon.png
+
+# Sırlar ve yerel ortam
+.env
+.env.*
+
+# Windows artıkları
+/$null
+desktop.ini
+Thumbs.db
+
+# Editör
+/.idea/
+/.vscode/
+.DS_Store

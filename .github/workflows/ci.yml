@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  dogrula:
+    name: Biçim, Clippy ve Test
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v7
+
+      - name: Rust araç zincirini kur
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.98.1
+          components: clippy, rustfmt
+
+      - name: Cargo önbelleği
+        uses: Swatinem/rust-cache@v2
+
+      - name: Biçim denetimi
+        run: cargo fmt --all -- --check
+
+      - name: Clippy (uyarılar hata)
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: Testler
+        run: cargo test --workspace

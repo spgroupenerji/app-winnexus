@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      etiket:
+        description: "Sürüm etiketi (örn. v2026.10.30); yoksa oluşturulur"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  yayinla:
+    name: Derle ve Yayınla
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - name: Depoyu al
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Rust araç zincirini kur
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: 1.98.1
+
+      - name: Cargo önbelleği
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: release
+
+      - name: Testleri çalıştır
+        run: cargo test --workspace
+
+      - name: Sürüm etiketini belirle
+        id: etiket
+        shell: pwsh
+        run: |
+          $etiket = if ("${{ github.event_name }}" -eq "workflow_dispatch") { "${{ github.event.inputs.etiket }}" } else { "${{ github.ref_name }}" }
+          if ($etiket -notmatch '^v[0-9A-Za-z][0-9A-Za-z._-]*$') { throw "Geçersiz sürüm etiketi: $etiket" }
+          "deger=$etiket" >> $env:GITHUB_OUTPUT
+
+      - name: Release derlemesi (manifest, sürüm ve ikon doğrulaması)
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release.ps1
+
+      - name: SHA-256 doğrula
+        id: dogrula
+        shell: pwsh
+        run: |
+          $exe = "release/WinNexus_beta.exe"
+          $ozet_dosyasi = "release/WinNexus_beta.exe.sha256"
+          if (-not (Test-Path $exe)) { throw "Release exe bulunamadı: $exe" }
+          if (-not (Test-Path $ozet_dosyasi)) { throw "SHA-256 dosyası bulunamadı: $ozet_dosyasi" }
+          $beklenen = ((Get-Content $ozet_dosyasi -Raw) -split '\s+')[0].ToLowerInvariant()
+          $gercek = (Get-FileHash -Algorithm SHA256 -LiteralPath $exe).Hash.ToLowerInvariant()
+          if ($beklenen -ne $gercek) { throw "SHA-256 uyuşmuyor: $beklenen / $gercek" }
+          "sha=$gercek" >> $env:GITHUB_OUTPUT
+
+      - name: GitHub Release oluştur
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ETIKET: ${{ steps.etiket.outputs.deger }}
+          SHA256: ${{ steps.dogrula.outputs.sha }}
+        run: |
+          $notlar = "Portatif Windows uygulaması. Kurulum gerekmez.`n`n- Doğrudan indirme: https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/WinNexus_beta.exe`n- SHA-256: $env:SHA256"
+          gh release create $env:ETIKET "release/WinNexus_beta.exe" "release/WinNexus_beta.exe.sha256" --title "WinNexus beta $env:ETIKET" --notes $notlar --generate-notes --latest
+
+      - name: İndirme bağlantısını doğrula
+        shell: pwsh
+        run: |
+          $url = "https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/WinNexus_beta.exe"
+          $yanit = Invoke-WebRequest -Uri $url -Method Head -MaximumRedirection 5
+          if ($yanit.StatusCode -ne 200) { throw "İndirme bağlantısı doğrulanamadı: $($yanit.StatusCode)" }
+          Write-Output "İndirme bağlantısı doğrulandı: $url"
