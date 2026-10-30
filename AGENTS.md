@@ -10,13 +10,12 @@ Rust (edition 2021, MSRV 1.98.1) + GPUI Kit masaüstü uygulaması. Üç krate:
 ## Doğrulama komutları
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "fmt --all -- --check"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "clippy --workspace --all-targets -- -D warnings"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "test --workspace"
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
 ```
 
-`scripts/build.ps1` MSVC ortamını (`vcvars64.bat`) yükler; doğrudan `cargo` yerine bu
-sarmalayıcıyı kullan.
+MSVC araç zinciri PATH'te değilse Visual Studio Developer PowerShell kullanın. CI (`.github/workflows/ci.yml`) aynı kapıları windows-latest üzerinde çalıştırır.
 
 ## Kurallar
 
@@ -60,15 +59,5 @@ This project is indexed by GitNexus as **app-winnexus** (3247 symbols, 9257 rela
 | `gitnexus://repo/app-winnexus/processes` | All execution flows |
 | `gitnexus://repo/app-winnexus/process/{name}` | Step-by-step execution trace |
 
-## CLI
-
-| Task | Read this skill file |
-| --- | --- |
-| Understand architecture / "How does X work?" | `.claude/skills/gitnexus-exploring/SKILL.md` |
-| Blast radius / "What breaks if I change X?" | `.claude/skills/gitnexus-impact-analysis/SKILL.md` |
-| Trace bugs / "Why is X failing?" | `.claude/skills/gitnexus-debugging/SKILL.md` |
-| Rename / extract / split / refactor | `.claude/skills/gitnexus-refactoring/SKILL.md` |
-| Tools, resources, schema reference | `.claude/skills/gitnexus-guide/SKILL.md` |
-| Index, status, clean, wiki CLI commands | `.claude/skills/gitnexus-cli/SKILL.md` |
 
 <!-- gitnexus:end -->

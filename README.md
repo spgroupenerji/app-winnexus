@@ -60,26 +60,30 @@ Release derlemesi `requireAdministrator` manifesti içerir; ilk açılışta Win
 
 Gereksinimler:
 
-- Rust (MSVC hedefi)
+- Rust 1.98.1 (MSVC hedefi; `rust-toolchain.toml` ile sabitlenir)
 - Visual Studio 2022 Build Tools — Desktop development with C++
 - Windows SDK
 
 ```powershell
-# Geliştirme derlemesi ve çalıştırma
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "run -p sp-app"
+# Geliştirme derlemesi
+cargo build -p sp-app
 
-# Release derlemesi, yönetici manifesti ve portatif exe
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release.ps1
+# Çalıştırma
+cargo run -p sp-app
+
+# Testler
+cargo test --workspace
 ```
 
-`scripts/release.ps1`; release derlemesini yapar, `mt.exe` ile `requireAdministrator` manifestini uygular, sürüm/ikon kaynaklarını doğrular ve güncel exe'yi `release` klasörüne tarih damgalı olarak kopyalar. Derleme betiği Git Bash'teki `link.exe` çakışmasını önlemek için MSVC ortamını (`vcvars64.bat`) yükler.
+MSVC araç zinciri PATH'te değilse Visual Studio Developer PowerShell kullanın. Resmi release derlemesi (yönetici manifesti, sürüm damgası, ikon ve SHA-256) GitHub Actions üzerinde `.github/workflows/release.yml` ile üretilir; depoda ikili dosya tutulmaz.
 
 ## Geliştirici Kurulumu (Yeni Bilgisayar)
 
 ```powershell
-cd WinNexus
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "test"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "build -p sp-app"
+git clone https://github.com/spgroupenerji/app-winnexus.git
+cd app-winnexus
+cargo test --workspace
+cargo build -p sp-app
 ```
 
 GPUI Kit ve diğer Rust bağımlılıkları Cargo tarafından indirilir. Cargo derleme önbelleği (`target/`) makineye ve yola özgüdür; depoya dahil edilmez ve kopyalanamaz. `release` klasörü yalnızca dağıtılabilir çıktıyı taşır.
@@ -121,38 +125,34 @@ GPUI Kit ve diğer Rust bağımlılıkları Cargo tarafından indirilir. Cargo d
 ## Doğrulama
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "fmt --all"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "clippy --workspace --all-targets -- -D warnings"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build.ps1 "test"
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-yeni.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-android.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-arac-merkezi.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-arac-merkezi-taramalar.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-kaldirici-toplu.ps1
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets -- -D warnings
+cargo test --workspace
 ```
 
-338 birim testi; kural sözleşmesi, registry sandbox, iş motoru, geri alma, Winget ayrıştırma/kaynak/mağaza/liste/politika, ADB komutları, sahiplik, kaldırma/geri yükleme güvenliği, toplu kaldırma ve artık karantinası, başlangıç yedeği, servis/görev/süreç ayrıştırma, temizlik/karantina/parçalama, gelişmiş temizlik/onarım/geri yükleme noktaları, kayıt defteri/kısayol/bağlam menüsü/güncelleme/uzantı/bağlantı/bulucu/disk analizi/kurulum izleme/zorla kaldırma, DISM/Appx/sürücü, donanım JSON/OEM kodlama ve sorun giderme mantığını kapsar. Arayüz doğrulaması; 15 sayfa, uygula/geri al, tarama, sekmeler, toplu seçim ve onay panelleri ekran görüntüleriyle yapılır. Araç Merkezi sayfası 21 aracın tamamını listeler; Android Yönetimi sayfası sürücü taraması, UAD önbelleği ve ADB akışıyla UIA üzerinden doğrulanır.
+Bu kapılar GitHub Actions CI (`.github/workflows/ci.yml`) üzerinde her push ve pull request'te çalışır.
+
+341 birim testi; kural sözleşmesi, registry sandbox, iş motoru, geri alma, Winget ayrıştırma/kaynak/mağaza/liste/politika, ADB komutları, sahiplik, kaldırma/geri yükleme güvenliği, toplu kaldırma ve artık karantinası, başlangıç yedeği, servis/görev/süreç ayrıştırma, temizlik/karantina/parçalama, gelişmiş temizlik/onarım/geri yükleme noktaları, kayıt defteri/kısayol/bağlam menüsü/güncelleme/uzantı/bağlantı/bulucu/disk analizi/kurulum izleme/zorla kaldırma, DISM/Appx/sürücü, donanım JSON/OEM kodlama ve sorun giderme mantığını kapsar. Arayüz doğrulaması; 15 sayfa, uygula/geri al, tarama, sekmeler, toplu seçim ve onay panelleri ekran görüntüleriyle yapılır. Araç Merkezi sayfası 21 aracın tamamını listeler; Android Yönetimi sayfası sürücü taraması, UAD önbelleği ve ADB akışıyla UIA üzerinden doğrulanır.
 
 ## Ekran Görüntüleri
 
 <p align="center">
-  <img src="tests/ui-arac-merkezi.png" width="49%" alt="Araç Merkezi" />
-  <img src="tests/ui-arac-merkezi-tarama-guncelleme.png" width="49%" alt="Windows güncelleme yöneticisi" />
+  <img src="assets/ekran-goruntuleri/ui-arac-merkezi.png" width="49%" alt="Araç Merkezi" />
+  <img src="assets/ekran-goruntuleri/ui-arac-merkezi-tarama-guncelleme.png" width="49%" alt="Windows güncelleme yöneticisi" />
 </p>
 <p align="center">
-  <img src="tests/ui-android.png" width="49%" alt="Android Yönetimi" />
-  <img src="tests/ui-android-surucu.png" width="49%" alt="Android sürücü taraması" />
+  <img src="assets/ekran-goruntuleri/ui-android.png" width="49%" alt="Android Yönetimi" />
+  <img src="assets/ekran-goruntuleri/ui-android-surucu.png" width="49%" alt="Android sürücü taraması" />
 </p>
 <p align="center">
-  <img src="tests/ui-android-uad.png" width="49%" alt="UAD paket veritabanı" />
+  <img src="assets/ekran-goruntuleri/ui-android-uad.png" width="49%" alt="UAD paket veritabanı" />
 </p>
 <p align="center">
-  <img src="tests/ui-arac-merkezi-tarama-baglanti.png" width="49%" alt="Bağlantı Yöneticisi" />
-  <img src="tests/ui-arac-merkezi-izleme-raporu.png" width="49%" alt="Kurulum İzleme raporu" />
+  <img src="assets/ekran-goruntuleri/ui-arac-merkezi-tarama-baglanti.png" width="49%" alt="Bağlantı Yöneticisi" />
+  <img src="assets/ekran-goruntuleri/ui-arac-merkezi-izleme-raporu.png" width="49%" alt="Kurulum İzleme raporu" />
 </p>
 <p align="center">
-  <img src="tests/ui-release.png" width="49%" alt="Uygulama genel görünüm" />
+  <img src="assets/ekran-goruntuleri/ui-release.png" width="49%" alt="Uygulama genel görünüm" />
 </p>
 
 ## Depo Yapısı
@@ -164,11 +164,10 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/ui-kaldirici-toplu.p
 | `crates/sp-win/` | Registry, kaldırıcı, sistem yönetimi, temizlik, bakım, onarım, Araç Merkezi, donanım, artık, Winget, Android ve sahiplik adaptörleri |
 | `rules/tweaks/` | 41 TOML ince ayar kuralı |
 | `profiles/` | Winget paket profilleri |
-| `assets/` | Uygulama ikonu (PNG/ICO) |
-| `docs/` | Tasarım, plan ve teknik kanıt notları |
-| `scripts/` | Derleme, release ve UI doğrulama betikleri |
-| `tests/` | Doğrulama ekran görüntüleri |
-| `release/` | Güncel portatif uygulama çalıştırıcısı |
+| `assets/` | Uygulama ikonu ve README ekran görüntüleri |
+| `.github/` | CI ve release iş akışları |
+| `docs/` | Teknik kanıt notları, yasal uyarı ve denetim raporları |
+| `release/` | Dağıtım klasörü (ikili dosyalar izlenmez) |
 
 ## Yasal Uyarı ve Sorumluluk Reddi
 

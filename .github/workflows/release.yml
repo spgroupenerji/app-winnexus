@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       etiket:
-        description: "Sürüm etiketi (örn. v2026.10.30); yoksa oluşturulur"
+        description: "Sürüm etiketi (örn. v0.1.0); yoksa oluşturulur"
         required: true
         type: string
 
@@ -50,31 +50,58 @@ jobs:
           if ($etiket -notmatch '^v[0-9A-Za-z][0-9A-Za-z._-]*$') { throw "Geçersiz sürüm etiketi: $etiket" }
           "deger=$etiket" >> $env:GITHUB_OUTPUT
 
-      - name: Release derlemesi (manifest, sürüm ve ikon doğrulaması)
-        shell: pwsh
-        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/release.ps1
-
-      - name: SHA-256 doğrula
-        id: dogrula
+      - name: Release derlemesi (manifest, ikon ve sürüm doğrulaması)
+        id: derle
         shell: pwsh
         run: |
-          $exe = "release/WinNexus_beta.exe"
-          $ozet_dosyasi = "release/WinNexus_beta.exe.sha256"
+          $ErrorActionPreference = "Stop"
+          $zaman = Get-Date -Format "yyyyMMddHHmm"
+          $env:WINNEXUS_BUILD_STAMP = $zaman
+          cargo build --release -p sp-app
+          if ($LASTEXITCODE -ne 0) { throw "Release derlemesi başarısız" }
+          $exe = "target/release/WinNexus.exe"
           if (-not (Test-Path $exe)) { throw "Release exe bulunamadı: $exe" }
-          if (-not (Test-Path $ozet_dosyasi)) { throw "SHA-256 dosyası bulunamadı: $ozet_dosyasi" }
-          $beklenen = ((Get-Content $ozet_dosyasi -Raw) -split '\s+')[0].ToLowerInvariant()
-          $gercek = (Get-FileHash -Algorithm SHA256 -LiteralPath $exe).Hash.ToLowerInvariant()
-          if ($beklenen -ne $gercek) { throw "SHA-256 uyuşmuyor: $beklenen / $gercek" }
-          "sha=$gercek" >> $env:GITHUB_OUTPUT
+          $kits = "C:\Program Files (x86)\Windows Kits\10\bin"
+          $mt = Get-ChildItem $kits -Directory -ErrorAction SilentlyContinue |
+              Sort-Object Name -Descending |
+              ForEach-Object { Join-Path $_.FullName "x64\mt.exe" } |
+              Where-Object { Test-Path $_ } |
+              Select-Object -First 1
+          if (-not $mt) { throw "mt.exe bulunamadı. Windows SDK gerekli." }
+          $uygulandi = $false
+          for ($deneme = 1; $deneme -le 3; $deneme++) {
+              & $mt -nologo -manifest "crates/sp-app/app.manifest" "-outputresource:$exe;#1"
+              if ($LASTEXITCODE -eq 0) { $uygulandi = $true; break }
+              Start-Sleep -Seconds (2 * $deneme)
+          }
+          if (-not $uygulandi) { throw "Manifest uygulanamadı: $exe" }
+          $baytlar = [System.IO.File]::ReadAllBytes($exe)
+          $metin = [System.Text.Encoding]::UTF8.GetString($baytlar)
+          if (-not $metin.Contains($zaman)) { throw "Derleme damgası exe içinde bulunamadı" }
+          if (-not $metin.Contains("requireAdministrator")) { throw "Yönetici manifesti exe içinde yok" }
+          Add-Type -AssemblyName System.Drawing
+          $ikon = [System.Drawing.Icon]::ExtractAssociatedIcon($exe)
+          if (-not $ikon) { throw "Uygulama ikonu exe içinde yok" }
+          $bilgi = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($exe)
+          New-Item -ItemType Directory -Force -Path release | Out-Null
+          $sabit = "release/WinNexus_beta.exe"
+          Copy-Item $exe $sabit -Force
+          $ozet = (Get-FileHash -Algorithm SHA256 -LiteralPath $sabit).Hash.ToLowerInvariant()
+          Set-Content -LiteralPath "$sabit.sha256" -Value ("{0}  WinNexus_beta.exe" -f $ozet) -Encoding ASCII
+          "damga=$zaman" >> $env:GITHUB_OUTPUT
+          "surum=$($bilgi.FileVersion)" >> $env:GITHUB_OUTPUT
+          "sha=$ozet" >> $env:GITHUB_OUTPUT
+          Write-Output "Boyut=$((Get-Item $sabit).Length) Sürüm=$($bilgi.FileVersion) SHA256=$ozet"
 
       - name: GitHub Release oluştur
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
           ETIKET: ${{ steps.etiket.outputs.deger }}
-          SHA256: ${{ steps.dogrula.outputs.sha }}
+          SURUM: ${{ steps.derle.outputs.surum }}
+          SHA256: ${{ steps.derle.outputs.sha }}
         run: |
-          $notlar = "Portatif Windows uygulaması. Kurulum gerekmez.`n`n- Doğrudan indirme: https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/WinNexus_beta.exe`n- SHA-256: $env:SHA256"
+          $notlar = "Portatif Windows uygulaması. Kurulum gerekmez.`n`n- Sürüm: $env:SURUM`n- Doğrudan indirme: https://github.com/$env:GITHUB_REPOSITORY/releases/latest/download/WinNexus_beta.exe`n- SHA-256: $env:SHA256"
           gh release create $env:ETIKET "release/WinNexus_beta.exe" "release/WinNexus_beta.exe.sha256" --title "WinNexus beta $env:ETIKET" --notes $notlar --generate-notes --latest
 
       - name: İndirme bağlantısını doğrula

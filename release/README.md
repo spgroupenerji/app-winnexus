@@ -2,18 +2,12 @@
 
 Bu klasör yerel dağıtım çıktısı içindir; depoda ikili dosya tutulmaz (`.gitignore`).
 
-`scripts/release.ps1` üretir:
+Resmi sürüm, `v*` etiketi itildiğinde `.github/workflows/release.yml` tarafından üretilir:
 
-- `WinNexus_beta-vYYYYMMDDHHMM.exe` — tarih damgalı yerel kopya (uygulama içi sürüm etiketiyle aynı)
-- `WinNexus_beta.exe` — sabit adlı kopya (GitHub Releases asset adı)
-- `WinNexus_beta.exe.sha256` — SHA-256 özeti
+- Testler çalıştırılır (`cargo test --workspace`).
+- Release derlemesi yapılır ve `mt.exe` ile `requireAdministrator` manifesti uygulanır.
+- Damga, yönetici manifesti, ikon ve sürüm bilgisi doğrulanır.
+- `WinNexus_beta.exe` ve `WinNexus_beta.exe.sha256` GitHub Releases'e yüklenir.
+- `releases/latest/download/...` indirme bağlantısı HEAD isteğiyle doğrulanır.
 
-Sürüm yayını `.github/workflows/release.yml` ile `v*` etiketi itildiğinde otomatik yapılır:
-GitHub Actions testleri çalıştırır, release derlemesini yapar, `requireAdministrator` manifestini
-uygular, SHA-256 doğrular ve GitHub Releases'e `WinNexus_beta.exe` + `.sha256` asset'lerini yükler.
-
-Elle yayın (yerel derleme sonrası):
-
-```powershell
-gh release create v2026.10.30 release/WinNexus_beta.exe release/WinNexus_beta.exe.sha256 --title "WinNexus beta v2026.10.30" --generate-notes --latest
-```
+Doğrudan indirme: https://github.com/spgroupenerji/app-winnexus/releases/latest/download/WinNexus_beta.exe

@@ -18,22 +18,11 @@
 /graphify-out/
 /graft/
 
-# Ajan araçlarının ürettiği dosyalar
-/.claude/*
-!/.claude/skills/
+# Yerel betikler, testler ve ajan dosyaları (depoda izlenmez)
+/scripts/
+/tests/
+/.claude/
 /CLAUDE.md
-
-# Yerel doğrulama artefaktları (scripts/ui-*.ps1 üretir); README'de kullanılan 8 görsel izlenir
-/tests/ui-*.png
-!tests/ui-arac-merkezi.png
-!tests/ui-arac-merkezi-tarama-guncelleme.png
-!tests/ui-android.png
-!tests/ui-android-surucu.png
-!tests/ui-android-uad.png
-!tests/ui-arac-merkezi-tarama-baglanti.png
-!tests/ui-arac-merkezi-izleme-raporu.png
-!tests/ui-release.png
-/tests/exe-icon.png
 
 # Sırlar ve yerel ortam
 .env

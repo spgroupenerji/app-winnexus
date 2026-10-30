@@ -176,3 +176,13 @@ Push sonrası ilk release otomatik oluşur; doğrudan indirme bağlantısı: `ht
 
 ---
 *Ham denetim raporları: [git hijyeni](git-hijyen.md) · [kod kalitesi](kod-kalitesi.md) · [bağımlılıklar](bagimlilik-dokumantasyon.md)*
+
+---
+
+## 11. Güncelleme (2026-10-30, kullanıcı talimatı)
+
+- `scripts/`, `tests/` ve `.claude/` izlemeden çıkarıldı ve `.gitignore`'a eklendi (yerel dosyalar korunur).
+- `docs/superpowers/` silindi.
+- README'de kullanılan 8 ekran görüntüsü `assets/ekran-goruntuleri/` altına taşındı; README yolları güncellendi.
+- Release hattı betiksizleştirildi: `.github/workflows/release.yml` derleme, manifest, ikon/damga doğrulaması, SHA-256 ve yayın adımlarını kendi içinde çalıştırır.
+- README/AGENTS doğrulama komutları doğrudan `cargo` üzerinden güncellendi.
