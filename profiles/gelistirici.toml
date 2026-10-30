@@ -1,0 +1,123 @@
+id = "gelistirici"
+ad = "Geliştirici"
+aciklama = "Geliştirme araçları, çalışma zamanları ve derleme bağımlılıkları."
+
+[[paket]]
+id = "Chocolatey.Chocolatey"
+ad = "Chocolatey"
+
+[[paket]]
+id = "Oracle.JavaRuntimeEnvironment"
+ad = "Java 8 Runtime"
+
+[[paket]]
+id = "Oracle.JDK.24"
+ad = "Java SE Development Kit 24"
+
+[[paket]]
+id = "Python.Python.3.14"
+ad = "Python 3.14"
+
+[[paket]]
+id = "OpenJS.NodeJS.LTS"
+ad = "Node.js LTS"
+
+[[paket]]
+id = "Thales.SafeNetAuthenticationClient"
+ad = "SafeNet Authentication Client"
+
+[[paket]]
+id = "ACS.CCIDPCSCDriver"
+ad = "ACS CCID PC/SC Driver"
+
+[[paket]]
+id = "ACS.UnifiedPCSCDriver"
+ad = "ACS Unified PC/SC Driver"
+
+[[paket]]
+id = "ClockworkMod.UniversalADBDriver"
+ad = "Universal ADB Driver"
+
+[[paket]]
+id = "Google.PlatformTools"
+ad = "Android Platform Tools"
+
+[[paket]]
+id = "Google.WorkspaceSyncForMicrosoftOutlook"
+ad = "Google Workspace Sync"
+
+[[paket]]
+id = "Microsoft.VCLibs.Desktop.14"
+ad = "Microsoft VCLibs Desktop"
+
+[[paket]]
+id = "Microsoft.VCRedist.2005.x64"
+ad = "Visual C++ 2005 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2005.x86"
+ad = "Visual C++ 2005 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2008.x64"
+ad = "Visual C++ 2008 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2008.x86"
+ad = "Visual C++ 2008 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2010.x64"
+ad = "Visual C++ 2010 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2010.x86"
+ad = "Visual C++ 2010 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2012.x64"
+ad = "Visual C++ 2012 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2012.x86"
+ad = "Visual C++ 2012 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2013.x64"
+ad = "Visual C++ 2013 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2013.x86"
+ad = "Visual C++ 2013 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2015+.x64"
+ad = "Visual C++ 2015+ x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2015+.x86"
+ad = "Visual C++ 2015+ x86"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.7"
+ad = "Windows App Runtime 1.7"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.9"
+ad = ".NET ASP.NET Core 9"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.9"
+ad = ".NET Desktop Runtime 9"
+
+[[paket]]
+id = "Microsoft.DotNet.RepairTool"
+ad = ".NET Repair Tool"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.9"
+ad = ".NET Runtime 9"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.9"
+ad = ".NET SDK 9"

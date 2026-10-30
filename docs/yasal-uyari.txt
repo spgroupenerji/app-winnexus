@@ -1,0 +1,29 @@
+YASAL UYARI VE SORUMLULUK REDDİ
+
+Bu yazılım ve içerdiği tüm modüller, SP GROUP ENERJİ SAN. VE TİC. LTD. ŞTİ. tarafından "olduğu gibi" ve "mevcut haliyle" sunulmaktadır. Uygulamayı indiren, kuran, çalıştıran veya kullanan herkes bu uyarıyı okuduğunu, anladığını ve kabul ettiğini beyan eder.
+
+1. KULLANIM SORUMLULUĞU
+Kullanıcı; uygulama üzerinden gerçekleştirilecek kaldırma, silme, temizleme, onarım, servis/görev değiştirme, sürücü/özellik yönetimi, registry düzenleme, Winget işlemleri ve benzeri tüm işlemlerden önce gerekli yedekleri almak, sistem geri yükleme noktası oluşturmak ve işlemleri uygun bir test ortamında doğrulamakla yükümlüdür. Veri kaybı, dosya bozulması, işletim sistemi veya donanım hasarı, iş kesintisi, kâr kaybı ve üçüncü taraf zararları dahil olmak üzere uygulamanın kullanımından doğan tüm risk ve sonuçlar kullanıcıya aittir.
+
+2. GARANTİ REDDİ
+Uygulama, açık veya zımni hiçbir garanti verilmeksizin sunulur. Satılabilirlik, belirli bir amaca uygunluk, hatasızlık, kesintisiz çalışma, doğruluk, güncellik, güvenlik ve virüsten arındırılmış olma dahil ancak bunlarla sınırlı olmamak üzere her türlü garanti reddedilir. Uygulamanın kullanımından elde edilecek sonuçların doğruluğu veya güvenilirliği garanti edilmez.
+
+3. SORUMLULUĞUN SINIRLANDIRILMASI
+Yürürlükteki zorunlu hukuk kurallarının izin verdiği azami ölçüde; SP GROUP ENERJİ SAN. VE TİC. LTD. ŞTİ., geliştiricileri, lisans verenleri ve tedarikçileri; doğrudan, dolaylı, özel, cezai, örnek niteliğinde veya sonuç olarak ortaya çıkan zararlardan, veri kaybından, kâr kaybından, iş kaybından, itibar kaybından, donanım veya yazılım hasarından, üçüncü taraf taleplerinden ve her türlü giderden sorumlu tutulamaz. Bu sınırlama, zararın öngörülebilir olup olmadığına bakılmaksızın uygulanır.
+
+4. GERİ ALINAMAZ İŞLEMLER
+Uygulamadaki bazı işlemler geri alınamaz veya tamamen geri döndürülemez. Özellikle dosya silme, karantinaya taşıma, geri dönüşüm kutusunu boşaltma, dosya parçalama, uygulama kaldırma, Appx/Store paketi kaldırma, DISM ResetBase, SFC/DISM onarımı, Windows Update veri deposu temizliği, eski geri yükleme noktalarının silinmesi, servis/görev yapılandırması, sürücü/özellik değişiklikleri ve registry temizliği bu kapsamdadır. Kullanıcı bu işlemleri onaylamadan önce riskleri değerlendirmekle yükümlüdür.
+
+5. YÖNETİCİ YETKİSİ VE HUKUKİ UYGUNLUK
+Kullanıcı, uygulamayı kullanabilmek için gerekli yönetici haklarına ve ilgili sistem, cihaz, hesap ve veriler üzerinde işlem yapma yetkisine sahip olduğunu kabul eder. Uygulamanın kullanımı, kullanıcının tabi olduğu mevzuata, kurum politikalarına ve üçüncü taraf lisans koşullarına aykırı olamaz. Kullanıcı, bu kurallara uymaktan tek başına sorumludur.
+
+6. ÜÇÜNCÜ TARAF BİLEŞENLER
+Uygulama; Microsoft Windows, Explorer, PowerShell, DISM, SFC, Winget, ADB ve benzeri üçüncü taraf bileşen ve hizmetlerle birlikte çalışabilir. Bu bileşenler kendi lisans ve kullanım koşullarına tabidir. SP GROUP ENERJİ SAN. VE TİC. LTD. ŞTİ., Microsoft Corporation veya diğer üçüncü taraflarla bağlantılı değildir; bu bileşenlerin davranışı, kullanılabilirliği, güvenliği veya sonuçlarından sorumlu değildir.
+
+7. TAZMİNAT
+Kullanıcı; uygulamanın hukuka aykırı, yetkisiz veya bu uyarıya aykırı kullanımından doğan üçüncü taraf talepleri, zararları, kayıpları ve masrafları (makul avukatlık ücretleri dahil) yürürlükteki hukukun izin verdiği ölçüde tazmin etmeyi kabul eder.
+
+8. YÜRÜRLÜK VE BÖLÜNEBİLİRLİK
+Bu uyarı, uygulamanın ilk çalıştırılmasında kullanıcıya gösterilir ve kullanıcı tarafından kabul edilmedikçe uygulama kullanılamaz. Bu metnin herhangi bir hükmünün geçersiz veya uygulanamaz sayılması, diğer hükümlerin yürürlüğünü etkilemez. Yürürlükteki zorunlu tüketici, sorumluluk ve kamu düzeni hükümleri her durumda saklıdır. SP GROUP ENERJİ SAN. VE TİC. LTD. ŞTİ., bu metni mevzuat ve ürün gelişmeleri doğrultusunda güncelleme hakkını saklı tutar.
+
+Kabul beyanı: "Yasal Uyarı ve Sorumluluk Reddi" metnini okudum, anladım ve kabul ediyorum. Uygulamayı kendi sorumluluğumda kullanacağımı, işlem öncesinde yedek alacağımı ve geri alınamaz işlemlerin sonuçlarını üstleneceğimi beyan ederim.

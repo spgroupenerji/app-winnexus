@@ -1,0 +1,35 @@
+id = "is"
+ad = "İş"
+aciklama = "PDF, çizim, video ve coğrafi uygulamalar."
+
+[[paket]]
+id = "PDFgear.PDFgear"
+ad = "PDFgear"
+
+[[paket]]
+id = "geeksoftwareGmbH.PDF24Creator"
+ad = "PDF24 Creator"
+
+[[paket]]
+id = "Google.EarthPro"
+ad = "Google Earth Pro"
+
+[[paket]]
+id = "Inkscape.Inkscape"
+ad = "Inkscape"
+
+[[paket]]
+id = "KDE.Krita"
+ad = "Krita"
+
+[[paket]]
+id = "Google.Antigravity"
+ad = "Antigravity"
+
+[[paket]]
+id = "OpenShot.OpenShot"
+ad = "OpenShot"
+
+[[paket]]
+id = "OSGeo.QGIS_LTR"
+ad = "QGIS LTR"

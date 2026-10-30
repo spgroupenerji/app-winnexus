@@ -1,0 +1,910 @@
+# WinNexus sistem optimizasyon kuralları
+# Yalnızca işlevsel Windows registry eşlemeleri kullanılır.
+
+[[rule]]
+id = "optimizasyon.opt.001"
+baslik = "\"Görev Görünümü\" düğmesi gizlensin"
+ozet = "\"Görev Görünümü\" düğmesi gizlensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-001"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowTaskViewButton"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowTaskViewButton"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowTaskViewButton"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.002"
+baslik = "İşlem Merkezi tepsisi gizlensin"
+ozet = "İşlem Merkezi tepsisi gizlensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "orta"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-002"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\Explorer'
+deger = "DisableNotificationCenter"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\Explorer'
+deger = "DisableNotificationCenter"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\Explorer'
+deger = "DisableNotificationCenter"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.003"
+baslik = "Görev çubuğunda her zaman tüm simge ve bildirimler görüntülensin"
+ozet = "Görev çubuğunda her zaman tüm simge ve bildirimler görüntülensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-003"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "EnableAutoTray"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "EnableAutoTray"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "EnableAutoTray"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.004"
+baslik = "Görev çubuğu kilitlensin"
+ozet = "Görev çubuğu kilitlensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-004"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSizeMove"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSizeMove"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSizeMove"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.005"
+baslik = "Görev çubuğunda küçük simgeler görüntülensin"
+ozet = "Görev çubuğunda küçük simgeler görüntülensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-005"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSmallIcons"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSmallIcons"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarSmallIcons"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.006"
+baslik = "Görev Çubuğunda Kişiler devre dışı bırakılsın"
+ozet = "Görev Çubuğunda Kişiler devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gorev_cubugu"
+risk = "orta"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-006"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People'
+deger = "PeopleBand"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Policies\Microsoft\Windows\Explorer'
+deger = "HidePeopleBar"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People'
+deger = "PeopleBand"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Policies\Microsoft\Windows\Explorer'
+deger = "HidePeopleBar"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\People'
+deger = "PeopleBand"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Policies\Microsoft\Windows\Explorer'
+deger = "HidePeopleBar"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.007"
+baslik = "Başlatma Menüsü, Görev Çubuğu, İşlem Merkezi ve Başlık Çubuğunda renk görüntülensin"
+ozet = "Başlatma Menüsü, Görev Çubuğu, İşlem Merkezi ve Başlık Çubuğunda renk görüntülensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-007"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "ColorPrevalence"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\DWM'
+deger = "ColorPrevalence"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "ColorPrevalence"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\DWM'
+deger = "ColorPrevalence"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "ColorPrevalence"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\DWM'
+deger = "ColorPrevalence"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.008"
+baslik = "Başlatma Menüsü, Görev Çubuğu ve İşlem Merkezi saydam olsun"
+ozet = "Başlatma Menüsü, Görev Çubuğu ve İşlem Merkezi saydam olsun ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-008"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "EnableTransparency"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "EnableTransparency"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+deger = "EnableTransparency"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.009"
+baslik = "Başlatma menüsündeki öneriler devre dışı bırakılsın"
+ozet = "Başlatma menüsündeki öneriler devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "orta"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-009"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SystemPaneSuggestionsEnabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SystemPaneSuggestionsEnabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SystemPaneSuggestionsEnabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.010"
+baslik = "Windows Mağaza reklamları devre dışı bırakılsın"
+ozet = "Windows Mağaza reklamları devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-010"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "PreInstalledAppsEnabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "PreInstalledAppsEnabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "PreInstalledAppsEnabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.011"
+baslik = "Kilit ekranında Windows odaklanması devre dışı bırakılsın"
+ozet = "Kilit ekranında Windows odaklanması devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-011"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "RotatingLockScreenEnable"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "RotatingLockScreenEnable"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "RotatingLockScreenEnable"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.012"
+baslik = "\"Yeni kurulan uygulamalar vurgulansın\" seçeneği devre dışı bırakılsın"
+ozet = "\"Yeni kurulan uygulamalar vurgulansın\" seçeneği devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-012"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Start_NotifyNewApps"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Start_NotifyNewApps"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Start_NotifyNewApps"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.013"
+baslik = "Önerilen uygulamaların otomatik olarak kurulması devre dışı bırakılsın"
+ozet = "Önerilen uygulamaların otomatik olarak kurulması devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "orta"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-013"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SilentInstalledAppsEnabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SilentInstalledAppsEnabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager'
+deger = "SilentInstalledAppsEnabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.014"
+baslik = "Oyun kaydedici devre dışı bırakılsın"
+ozet = "Oyun kaydedici devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-014"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR'
+deger = "AppCaptureEnabled"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'System\GameConfigStore'
+deger = "GameDVR_Enabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR'
+deger = "AppCaptureEnabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'System\GameConfigStore'
+deger = "GameDVR_Enabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\GameDVR'
+deger = "AppCaptureEnabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'System\GameConfigStore'
+deger = "GameDVR_Enabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.015"
+baslik = "Bu bilgisayara dosya gezgini açılsın"
+ozet = "Bu bilgisayara dosya gezgini açılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-015"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "LaunchTo"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "LaunchTo"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "LaunchTo"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.016"
+baslik = "Şerit küçültülsün"
+ozet = "Şerit küçültülsün ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-016"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ribbon'
+deger = "MinimizedStateTabletModeOff"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ribbon'
+deger = "MinimizedStateTabletModeOff"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Ribbon'
+deger = "MinimizedStateTabletModeOff"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.017"
+baslik = "Otomatik oynatma devre dışı bırakılsın"
+ozet = "Otomatik oynatma devre dışı bırakılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-017"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
+deger = "DisableAutoplay"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
+deger = "DisableAutoplay"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers'
+deger = "DisableAutoplay"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.018"
+baslik = "Klasör pencereleri ayrı işlem olarak açılsın"
+ozet = "Klasör pencereleri ayrı işlem olarak açılsın ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-018"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "SeparateProcess"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "SeparateProcess"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "SeparateProcess"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.019"
+baslik = "Menü çubuğu her zaman görüntülensin"
+ozet = "Menü çubuğu her zaman görüntülensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-019"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "AlwaysShowMenus"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "AlwaysShowMenus"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "AlwaysShowMenus"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.020"
+baslik = "Windows gezgini küçültülmüş ise yolun tamamı görüntülensin"
+ozet = "Windows gezgini küçültülmüş ise yolun tamamı görüntülensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-020"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState'
+deger = "FullPath"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState'
+deger = "FullPath"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState'
+deger = "FullPath"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "optimizasyon.opt.021"
+baslik = "Hızlı Erişim altında Sık Kullanılan Klasörler görüntülenmesin"
+ozet = "Hızlı Erişim altında Sık Kullanılan Klasörler görüntülenmesin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-021"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowFrequent"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowFrequent"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowFrequent"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.022"
+baslik = "Hızlı Erişim altında Son Kullanılan Dosyalar görüntülenmesin"
+ozet = "Hızlı Erişim altında Son Kullanılan Dosyalar görüntülenmesin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = true
+kanit = "docs/kanit/optimizasyon.md#opt-022"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowRecent"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowRecent"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'
+deger = "ShowRecent"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.023"
+baslik = "Dil Çubuğu görev çubuğunda gizlensin"
+ozet = "Dil Çubuğu görev çubuğunda gizlensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-023"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ShowStatus"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ExtraIconsOnMinimized"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ShowStatus"
+gorunum = 64
+veri = { dword = 4 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ExtraIconsOnMinimized"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ShowStatus"
+gorunum = 64
+beklenen = { dword = 4 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar'
+deger = "ExtraIconsOnMinimized"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "optimizasyon.opt.024"
+baslik = "Dil Çubuğunda yardım düğmesi gizlensin"
+ozet = "Dil Çubuğunda yardım düğmesi gizlensin ayarını uygular; önceki değer günlüğe yazılır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/optimizasyon.md#opt-024"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar\ItemState\{ED9D5450-EBE6-4255-8289-F8A31E687228}'
+deger = "DemoteLevel"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar\ItemState\{ED9D5450-EBE6-4255-8289-F8A31E687228}'
+deger = "DemoteLevel"
+gorunum = 64
+veri = { dword = 3 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\CTF\LangBar\ItemState\{ED9D5450-EBE6-4255-8289-F8A31E687228}'
+deger = "DemoteLevel"
+gorunum = 64
+beklenen = { dword = 3 }

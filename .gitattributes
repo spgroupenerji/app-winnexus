@@ -1,0 +1,21 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.bat text eol=crlf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.svg text eol=lf
+*.woff binary
+*.woff2 binary
+*.webm binary
+*.mp4 binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.ico binary
+*.icns binary
+*.tiff binary
+*.dxf -text
+*.tsv text eol=lf

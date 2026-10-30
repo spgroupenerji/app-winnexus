@@ -1,0 +1,67 @@
+[[rule]]
+id = "gorev_cubugu.saniye_goster"
+baslik = "Görev çubuğu saatinde saniyeleri göster"
+ozet = "Sistem tepsisindeki saatte saniye bilgisini görünür yapar."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#gorev-cubugu"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowSecondsInSystemClock"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowSecondsInSystemClock"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "ShowSecondsInSystemClock"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "gorev_cubugu.sola_hizala"
+baslik = "Görev çubuğunu sola hizala"
+ozet = "Windows 11 görev çubuğu simgelerini sol tarafa hizalar."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0.22000"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#gorev-cubugu"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarAl"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarAl"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarAl"
+gorunum = 64
+beklenen = { dword = 0 }

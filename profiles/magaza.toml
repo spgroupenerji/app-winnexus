@@ -1,0 +1,19 @@
+id = "magaza"
+ad = "Mağaza"
+aciklama = "Microsoft Store üzerinden yüklenen uygulamalar."
+
+[[paket]]
+id = "9PM860492SZD"
+ad = "PC Manager"
+
+[[paket]]
+id = "9P8LTPGCBZXD"
+ad = "Wintoys"
+
+[[paket]]
+id = "9NKSQGP7F2NH"
+ad = "WhatsApp"
+
+[[paket]]
+id = "9ND1DGRWV3CH"
+ad = "PDF Extra"

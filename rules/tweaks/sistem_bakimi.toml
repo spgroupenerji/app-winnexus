@@ -1,0 +1,50 @@
+[[rule]]
+id = "sistem.numlock_acilis"
+baslik = "Açılışta Num Lock'u aç"
+ozet = "Oturum açıldığında sayı tuş takımının etkin olmasını sağlar. Kullanıcı ve varsayılan kullanıcı profilinde InitialKeyboardIndicators değerini 2 yapar."
+kategori = "sistem"
+risk = "dusuk"
+yonetici = true
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/sistem_bakimi.md#num-lock"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKU"
+yol = '.DEFAULT\Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+veri = { sz = "2" }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKU"
+yol = '.DEFAULT\Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+veri = { sz = "2" }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+beklenen = { sz = "2" }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKU"
+yol = '.DEFAULT\Control Panel\Keyboard'
+deger = "InitialKeyboardIndicators"
+beklenen = { sz = "2" }

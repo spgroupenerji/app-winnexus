@@ -1,0 +1,67 @@
+[[rule]]
+id = "gezgin.gizli_dosyalar"
+baslik = "Gizli dosyaları göster"
+ozet = "Gezgin'de gizli dosya ve klasörleri görünür yapar."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#gezgin"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Hidden"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Hidden"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "Hidden"
+gorunum = 64
+beklenen = { dword = 1 }
+
+[[rule]]
+id = "gezgin.dosya_uzantilari"
+baslik = "Dosya uzantılarını göster"
+ozet = "Bilinen dosya türlerinin uzantılarını Gezgin'de görünür yapar."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#gezgin"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "HideFileExt"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "HideFileExt"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "HideFileExt"
+gorunum = 64
+beklenen = { dword = 0 }

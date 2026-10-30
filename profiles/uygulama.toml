@@ -1,0 +1,51 @@
+id = "uygulama"
+ad = "Uygulama"
+aciklama = "Günlük kullanılan tarayıcı, medya ve sistem araçları."
+
+[[paket]]
+id = "Google.Chrome"
+ad = "Google Chrome"
+
+[[paket]]
+id = "Zen-Team.Zen-Browser"
+ad = "Zen Browser"
+
+[[paket]]
+id = "7zip.7zip"
+ad = "7-Zip"
+
+[[paket]]
+id = "Notepad++.Notepad++"
+ad = "Notepad++"
+
+[[paket]]
+id = "VideoLAN.VLC"
+ad = "VLC media player"
+
+[[paket]]
+id = "VovSoft.PDFReader"
+ad = "VovSoft PDF Reader"
+
+[[paket]]
+id = "ONLYOFFICE.DesktopEditors"
+ad = "ONLYOFFICE"
+
+[[paket]]
+id = "Bandisoft.Honeyview"
+ad = "Honeyview"
+
+[[paket]]
+id = "IObit.IObitUnlocker"
+ad = "IObit Unlocker"
+
+[[paket]]
+id = "OO-Software.AppBuster"
+ad = "AppBuster"
+
+[[paket]]
+id = "OO-Software.ShutUp10"
+ad = "O&O ShutUp10"
+
+[[paket]]
+id = "WiseCleaner.WiseMemoryOptimizer"
+ad = "Wise Memory Optimizer"

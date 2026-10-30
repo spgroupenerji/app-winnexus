@@ -1,0 +1,17 @@
+[package]
+name = "sp-win"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+sp-core = { path = "../sp-core" }
+winreg.workspace = true
+windows-sys.workspace = true
+tracing.workspace = true
+encoding_rs.workspace = true
+adb_client.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

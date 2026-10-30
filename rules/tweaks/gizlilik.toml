@@ -1,0 +1,33 @@
+[[rule]]
+id = "gizlilik.reklam_kimligi"
+baslik = "Reklam kimliğini kapat"
+ozet = "Uygulamaların reklam amacıyla kişiselleştirilmiş kimlik kullanmasını engeller."
+kategori = "gizlilik"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#gizlilik"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+deger = "Enabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+deger = "Enabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+deger = "Enabled"
+gorunum = 64
+beklenen = { dword = 0 }

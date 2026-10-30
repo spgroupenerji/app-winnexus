@@ -1,0 +1,315 @@
+[[rule]]
+id = "gorev_cubugu.widgets_gizle"
+baslik = "Görev çubuğu widget'larını gizle"
+ozet = "Windows 11 görev çubuğundaki widget düğmesini gizler."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0.22000"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarDa"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarDa"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarDa"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "gorev_cubugu.sohbet_gizle"
+baslik = "Görev çubuğu sohbet düğmesini gizle"
+ozet = "Windows 11 görev çubuğundaki sohbet düğmesini gizler."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0.22000"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarMn"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarMn"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced'
+deger = "TaskbarMn"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "gorev_cubugu.arama_kutusu_gizle"
+baslik = "Görev çubuğu arama kutusunu gizle"
+ozet = "Görev çubuğundaki arama kutusunu gizler."
+kategori = "gorev_cubugu"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "SearchboxTaskbarMode"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "SearchboxTaskbarMode"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "SearchboxTaskbarMode"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "gezgin.bing_aramasi_kapat"
+baslik = "Başlat menüsünde Bing aramasını kapat"
+ozet = "Başlat menüsü aramalarında web/Bing sonuçlarını devre dışı bırakır."
+kategori = "gezgin"
+risk = "dusuk"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "BingSearchEnabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "BingSearchEnabled"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Search'
+deger = "BingSearchEnabled"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "gezgin.onedrive_baslangictan_kaldir"
+baslik = "OneDrive'ı başlangıçtan kaldır"
+ozet = "OneDrive başlangıç kaydı varsa kaldırır; OneDrive uygulaması silinmez."
+kategori = "gezgin"
+risk = "orta"
+yonetici = false
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Run'
+deger = "OneDrive"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_sil"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Run'
+deger = "OneDrive"
+gorunum = 64
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKCU"
+yol = 'Software\Microsoft\Windows\CurrentVersion\Run'
+deger = "OneDrive"
+gorunum = 64
+
+[[rule]]
+id = "gizlilik.telemetri_temel"
+baslik = "Tanılama verilerini temel düzeye indir"
+ozet = "Windows tanılama verisi politikasını temel düzeye çeker."
+kategori = "gizlilik"
+risk = "orta"
+yonetici = true
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\DataCollection'
+deger = "AllowTelemetry"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\DataCollection'
+deger = "AllowTelemetry"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\DataCollection'
+deger = "AllowTelemetry"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "gizlilik.etkinlik_gecmisi"
+baslik = "Etkinlik geçmişini kapat"
+ozet = "Etkinlik akışını, yayımlamayı ve yüklemeyi devre dışı bırakır."
+kategori = "gizlilik"
+risk = "orta"
+yonetici = true
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "EnableActivityFeed"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "PublishUserActivities"
+gorunum = 64
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "UploadUserActivities"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "EnableActivityFeed"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "PublishUserActivities"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "UploadUserActivities"
+gorunum = 64
+veri = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "EnableActivityFeed"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "PublishUserActivities"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SOFTWARE\Policies\Microsoft\Windows\System'
+deger = "UploadUserActivities"
+gorunum = 64
+beklenen = { dword = 0 }
+
+[[rule]]
+id = "sistem.uzun_yol_destegi"
+baslik = "Uzun dosya yolu desteğini aç"
+ozet = "260 karakterden uzun dosya yollarının desteklenmesini sağlar."
+kategori = "sistem"
+risk = "orta"
+yonetici = true
+os = ">=10.0"
+yeniden_baslatma = false
+kanit = "docs/kanit/betikler.md#ek-kurallar"
+
+[[rule.algila]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SYSTEM\CurrentControlSet\Control\FileSystem'
+deger = "LongPathsEnabled"
+gorunum = 64
+
+[[rule.uygula]]
+tur = "registry_yaz"
+kove = "HKLM"
+yol = 'SYSTEM\CurrentControlSet\Control\FileSystem'
+deger = "LongPathsEnabled"
+gorunum = 64
+veri = { dword = 1 }
+
+[[rule.dogrula]]
+tur = "registry"
+kove = "HKLM"
+yol = 'SYSTEM\CurrentControlSet\Control\FileSystem'
+deger = "LongPathsEnabled"
+gorunum = 64
+beklenen = { dword = 1 }
