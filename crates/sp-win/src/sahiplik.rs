@@ -38,13 +38,14 @@ pub fn komut_metni(exe: &Path, yer_tutucu: &str) -> String {
     format!("\"{}\" --sahipligi-al \"{}\"", exe.display(), yer_tutucu)
 }
 
+const MENU_ANAHTARLARI: [(&str, &str); 3] = [
+    (r"*\shell\WinNexus.SahipligiAl", "%1"),
+    (r"Directory\shell\WinNexus.SahipligiAl", "%1"),
+    (r"Directory\Background\shell\WinNexus.SahipligiAl", "%V"),
+];
+
 pub fn menu_ekle(exe: &Path) -> Sonuc<()> {
-    let hedefler = [
-        (r"*\shell\runas", "%1"),
-        (r"Directory\shell\runas", "%1"),
-        (r"Directory\Background\shell\runas", "%V"),
-    ];
-    for (anahtar, yer_tutucu) in hedefler {
+    for (anahtar, yer_tutucu) in MENU_ANAHTARLARI {
         varsayilan_yaz(anahtar, "Sahipliği Al")?;
         varsayilan_yaz(
             &format!(r"{anahtar}\command"),
@@ -55,11 +56,7 @@ pub fn menu_ekle(exe: &Path) -> Sonuc<()> {
 }
 
 pub fn menu_kaldir() -> Sonuc<()> {
-    for anahtar in [
-        r"*\shell\runas",
-        r"Directory\shell\runas",
-        r"Directory\Background\shell\runas",
-    ] {
+    for (anahtar, _) in MENU_ANAHTARLARI {
         anahtar_sil(anahtar)?;
     }
     Ok(())
@@ -116,13 +113,13 @@ pub fn sahipligi_al(yol: &Path) -> Sonuc<()> {
 }
 
 pub fn hata_kaydet(hata: &str) {
-    let Some(yerel) = std::env::var_os("LOCALAPPDATA") else {
+    let Ok(exe) = std::env::current_exe() else {
         return;
     };
-    let dizin = std::path::PathBuf::from(yerel)
-        .join("SP GROUP")
-        .join("WinNexus")
-        .join("logs");
+    let Some(klasor) = exe.parent() else {
+        return;
+    };
+    let dizin = klasor.join("veri").join("gunluk");
     let _ = std::fs::create_dir_all(&dizin);
     let dosya = dizin.join("sahiplik.log");
     if let Ok(mut dosya) = std::fs::OpenOptions::new()
@@ -145,5 +142,13 @@ mod testler {
         assert!(metin.starts_with('"'));
         assert!(metin.contains("--sahipligi-al"));
         assert!(metin.ends_with("\"%1\""));
+    }
+
+    #[test]
+    fn menu_anahtarlari_yerlesik_fiilleri_ezmez() {
+        for (anahtar, _) in MENU_ANAHTARLARI {
+            assert!(anahtar.ends_with("WinNexus.SahipligiAl"));
+            assert!(!anahtar.contains(r"\runas"));
+        }
     }
 }

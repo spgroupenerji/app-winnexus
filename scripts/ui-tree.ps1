@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$Exe = "target\debug\WinNexus.exe"
 )
 

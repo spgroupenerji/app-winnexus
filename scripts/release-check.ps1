@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$Exe = "target\release\WinNexus.exe"
 )
 

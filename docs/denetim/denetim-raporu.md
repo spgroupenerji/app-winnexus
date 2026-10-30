@@ -121,7 +121,7 @@ Ayrıntı: [bağımlılık raporu](bagimlilik-dokumantasyon.md). context7 ile do
 | `scripts/*.ps1` (9) | UTF-8 BOM (PowerShell 5.1 Türkçe düzeltmesi) |
 | `.git/config` | Remote URL'den PAT çıkarıldı |
 
-**Doğrulama (son çalıştırma, çıkış kodları):** `FMT_EXIT=0` · `CLIPPY_EXIT=0` · `TEST_EXIT=0`; toplam **341 test** (sp-core 155, sp-win 186). gitnexus `detect_changes`: 11 sembol, 12 dosya, risk **high** (motor değişikliği); etkilenen süreçler `icerik`, `arac_kutusu`, `render` — testlerle kapsandı.
+**Doğrulama (son çalıştırma, çıkış kodları):** `FMT_EXIT=0` · `CLIPPY_EXIT=0` · `TEST_EXIT=0`; toplam **341 test** (sp-core 155, sp-win 186). Release hattı: release.ps1 ikinci çalıştırma **exit 0**, release-check.ps1 **exit 0** (yönetici manifesti + ikon), SHA-256 eşleşmesi doğrulandı. gitnexus `detect_changes`: 11 sembol, 12 dosya, risk **high** (motor değişikliği); etkilenen süreçler `icerik`, `arac_kutusu`, `render` — testlerle kapsandı.
 
 ## 8. Araç kanıtları (sp-sozlesme §2.6)
 
@@ -153,6 +153,8 @@ Kullanıcı isteği: derlenmiş uygulamanın herkese açık sunucudan doğrudan 
 | `scripts/release.ps1` | Sabit adlı `release/WinNexus_beta.exe` + `WinNexus_beta.exe.sha256` üretir (GitHub asset adları) |
 | `README.md` | İndir bölümü: sürüm sayfası, doğrudan indirme ve SHA-256 bağlantıları |
 | `release/README.md` | Yayın akışı ve elle `gh release create` komutu |
+
+**Yerel doğrulama:** release.ps1 iki kez çalıştırıldı; ikinci çalıştırma **exit 0** (deterministik). Üretilen release/WinNexus_beta.exe: 32.371.200 B, requireAdministrator manifesti **True**, ikon 32x32, SHA-256 92f65c58…eac049 — WinNexus_beta.exe.sha256 ile eşleşiyor. mt.exe ve vcvars64.bat keşfi vswhere/SDK taramasıyla doğrulandı.
 
 **Bekleyen adım:** yerel git kimlik bilgisi geçersiz (`git push --dry-run` → `Authentication failed`); main ve `v*` etiketi push edilemediği için GitHub Actions tetiklenmedi. Kullanıcı `gh auth login -h github.com` (veya `gh auth setup-git`) ile yeniden giriş yaptıktan sonra:
 

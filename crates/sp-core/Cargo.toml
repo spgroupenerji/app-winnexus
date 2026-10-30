@@ -15,7 +15,6 @@ regex.workspace = true
 strsim.workspace = true
 time.workspace = true
 tracing.workspace = true
-directories.workspace = true
 
 [dev-dependencies]
 tempfile.workspace = true

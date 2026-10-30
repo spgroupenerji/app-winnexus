@@ -138,43 +138,84 @@ impl IsMotoru {
             match sonuc {
                 Ok(()) => {
                     uygulanan.push(adim.clone());
-                    self.gunluk.yaz(&GunlukKaydi::basarili(
+                    if let Err(hata) = self.gunluk.yaz(&GunlukKaydi::basarili(
                         &is_id,
                         &plan.kural_id,
                         adim_no,
                         &adim.aciklama,
                         adim.onceki.as_ref(),
-                    ))?;
+                    )) {
+                        return Err(self.telafi_hatasi(
+                            &is_id,
+                            &plan.kural_id,
+                            &uygulanan,
+                            format!(
+                                "{} uygulandı ancak günlüğe yazılamadı: {hata}",
+                                adim.aciklama
+                            ),
+                        ));
+                    }
                 }
                 Err(hata) => {
-                    self.gunluk.yaz(&GunlukKaydi::hatali(
-                        &is_id,
-                        &plan.kural_id,
-                        adim_no,
-                        &adim.aciklama,
-                        adim.onceki.as_ref(),
-                        &hata.to_string(),
-                    ))?;
-                    self.adimlari_geri_al(&is_id, &plan.kural_id, &uygulanan)?;
-                    return Err(Hata::Registry(format!(
-                        "{} uygulanamadı: {hata}",
-                        adim.aciklama
-                    )));
+                    let gunluk_hatasi = self
+                        .gunluk
+                        .yaz(&GunlukKaydi::hatali(
+                            &is_id,
+                            &plan.kural_id,
+                            adim_no,
+                            &adim.aciklama,
+                            adim.onceki.as_ref(),
+                            &hata.to_string(),
+                        ))
+                        .err();
+                    let mut mesaj = format!("{} uygulanamadı: {hata}", adim.aciklama);
+                    if let Some(gunluk_hatasi) = &gunluk_hatasi {
+                        mesaj.push_str(&format!("; günlüğe yazılamadı: {gunluk_hatasi}"));
+                    }
+                    return Err(
+                        match self.adimlari_geri_al(&is_id, &plan.kural_id, &uygulanan) {
+                            Ok(()) => Hata::Registry(mesaj),
+                            Err(geri_alma) => {
+                                Hata::Registry(format!("{mesaj}; geri alma başarısız: {geri_alma}"))
+                            }
+                        },
+                    );
                 }
             }
         }
 
         if self.dogrula_plan(plan) != KuralDurumu::Uygulandi {
-            self.adimlari_geri_al(&is_id, &plan.kural_id, &uygulanan)?;
-            return Err(Hata::Dogrulama(format!(
+            let mesaj = format!(
                 "{} uygulandı ancak doğrulanamadı; değişiklikler geri alındı.",
                 plan.baslik
-            )));
+            );
+            return Err(
+                match self.adimlari_geri_al(&is_id, &plan.kural_id, &uygulanan) {
+                    Ok(()) => Hata::Dogrulama(mesaj),
+                    Err(geri_alma) => Hata::Dogrulama(format!(
+                        "{} uygulandı ancak doğrulanamadı; geri alma başarısız: {geri_alma}",
+                        plan.baslik
+                    )),
+                },
+            );
         }
 
         Ok(IsSonucu {
             uygulanan: uygulanan.len(),
         })
+    }
+
+    fn telafi_hatasi(
+        &self,
+        is_id: &str,
+        kural_id: &str,
+        uygulanan: &[PlanAdimi],
+        mesaj: String,
+    ) -> Hata {
+        match self.adimlari_geri_al(is_id, kural_id, uygulanan) {
+            Ok(()) => Hata::Gunluk(format!("{mesaj}; değişiklikler geri alındı.")),
+            Err(geri_alma) => Hata::GeriAlma(format!("{mesaj}; geri alma başarısız: {geri_alma}")),
+        }
     }
 
     pub fn geri_al(&self, plan: &IsPlani) -> Sonuc<()> {
@@ -211,6 +252,7 @@ impl IsMotoru {
     }
 
     fn adimlari_geri_al(&self, is_id: &str, kural_id: &str, adimlar: &[PlanAdimi]) -> Sonuc<()> {
+        let mut hatalar = Vec::new();
         for (adim_no, adim) in adimlar.iter().enumerate().rev() {
             let konum = adim.eylem.konum();
             let sonuc = match (&adim.eylem, &adim.onceki) {
@@ -224,31 +266,42 @@ impl IsMotoru {
             };
             match sonuc {
                 Ok(()) => {
-                    self.gunluk.yaz(&GunlukKaydi::basarili(
+                    if let Err(hata) = self.gunluk.yaz(&GunlukKaydi::basarili(
                         is_id,
                         kural_id,
                         adim_no,
                         "geri alma",
                         adim.onceki.as_ref(),
-                    ))?;
+                    )) {
+                        hatalar.push(format!(
+                            "{}: geri alma günlüğü yazılamadı: {hata}",
+                            adim.aciklama
+                        ));
+                    }
                 }
                 Err(hata) => {
-                    self.gunluk.yaz(&GunlukKaydi::hatali(
+                    if let Err(gunluk_hatasi) = self.gunluk.yaz(&GunlukKaydi::hatali(
                         is_id,
                         kural_id,
                         adim_no,
                         "geri alma",
                         adim.onceki.as_ref(),
                         &hata.to_string(),
-                    ))?;
-                    return Err(Hata::GeriAlma(format!(
-                        "{} geri alınamadı: {hata}",
-                        adim.aciklama
-                    )));
+                    )) {
+                        hatalar.push(format!(
+                            "{}: geri alma hatası günlüğe yazılamadı: {gunluk_hatasi}",
+                            adim.aciklama
+                        ));
+                    }
+                    hatalar.push(format!("{} geri alınamadı: {hata}", adim.aciklama));
                 }
             }
         }
-        Ok(())
+        if hatalar.is_empty() {
+            Ok(())
+        } else {
+            Err(Hata::GeriAlma(hatalar.join(" | ")))
+        }
     }
 }
 
@@ -435,5 +488,68 @@ mod testler {
         let mut kural = kural();
         kural.os = Some(">=11.0".into());
         assert_eq!(motor.durum(&kural), KuralDurumu::Desteklenmiyor);
+    }
+
+    #[test]
+    fn geri_alma_basarisizsa_diger_adimlar_denenir() {
+        let (motor, adaptor, _dizin) = motor(true, Some(RegistryVeri::Dword(9)));
+        adaptor.veri.lock().unwrap().insert(
+            (Kove::Hkcu, "Software\\Test".to_string(), "Y".to_string()),
+            RegistryVeri::Dword(9),
+        );
+        let mut kural = kural();
+        kural.uygula = vec![
+            Eylem::RegistryYaz {
+                kove: Kove::Hkcu,
+                yol: "Software\\Test".into(),
+                deger: "X".into(),
+                gorunum: Some(64),
+                veri: RegistryVeri::Dword(1),
+            },
+            Eylem::RegistryYaz {
+                kove: Kove::Hkcu,
+                yol: "Software\\Test".into(),
+                deger: "Y".into(),
+                gorunum: Some(64),
+                veri: RegistryVeri::Dword(2),
+            },
+            Eylem::RegistryYaz {
+                kove: Kove::Hkcu,
+                yol: "Software\\Test".into(),
+                deger: "Z".into(),
+                gorunum: Some(64),
+                veri: RegistryVeri::Dword(9),
+            },
+        ];
+        kural.dogrula = vec![];
+        let plan = motor.onizle(&kural).unwrap();
+        let hata = motor.uygula(&plan).unwrap_err();
+        assert!(hata.to_string().contains("geri alma başarısız"));
+        let veri = adaptor.veri.lock().unwrap();
+        assert!(!veri.contains_key(&(Kove::Hkcu, "Software\\Test".to_string(), "X".to_string())));
+        assert_eq!(
+            veri.get(&(Kove::Hkcu, "Software\\Test".to_string(), "Y".to_string())),
+            Some(&RegistryVeri::Dword(2))
+        );
+    }
+
+    #[test]
+    fn gunluk_yazilamazsa_uygulama_durur() {
+        let dizin = tempfile::tempdir().unwrap();
+        std::fs::create_dir(dizin.path().join("journal.jsonl")).unwrap();
+        let adaptor = Arc::new(BellekAdaptoru::yeni(true, None));
+        let gunluk = Arc::new(Gunluk::yeni(dizin.path().join("journal.jsonl")));
+        let sistem = SistemBilgisi {
+            surum: Surum {
+                major: 10,
+                minor: 0,
+                build: 26200,
+            },
+            yonetici: true,
+        };
+        let motor = IsMotoru::yeni(adaptor.clone(), gunluk, sistem);
+        let plan = motor.onizle(&kural()).unwrap();
+        assert!(matches!(motor.uygula(&plan), Err(Hata::Gunluk(_))));
+        assert!(adaptor.veri.lock().unwrap().is_empty());
     }
 }
