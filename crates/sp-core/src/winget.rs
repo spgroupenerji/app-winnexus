@@ -794,4 +794,11 @@ mod testler {
         assert_eq!(oneriler.len(), 1);
         assert_eq!(oneriler[0].id, "GitHub.cli");
     }
+
+    #[test]
+    fn gomulu_profiller_yuklenir_ve_dogrulanir() {
+        let profiller = gomulu_profilleri_yukle().unwrap();
+        assert!(!profiller.is_empty());
+        assert!(profiller.iter().all(|profil| !profil.paket.is_empty()));
+    }
 }

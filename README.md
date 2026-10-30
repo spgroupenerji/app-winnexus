@@ -20,7 +20,7 @@ Rust ve GPUI Kit ile geliştirilen; Windows bakımı, ince ayar, uygulama yönet
 - **Bakım:** DISM bileşen deposu analizi/temizliği/sağlık taraması/onarımı ve ResetBase, SFC, Appx listesi/onarımı, Windows özellikleri, sürücü dışa aktarma, Windows Update geçmişi görüntüleme/temizleme, geri yükleme noktaları (oluşturma, geri dönme, sistem korumasını açma/kapatma, en yenisi korunarak temizleme), simge önbelleği onarımı ve Windows sorun gidericileri; Microsoft/Windows sistem paketleri korunur
 - **Donanım:** Sistem özeti, CPU/GPU/RAM, fiziksel disk sağlığı, WLAN profilleri, UAC ve Uzak Masaüstü durumu; salt okunur
 - **Store Uygulamaları:** Appx envanteri; yalnızca üçüncü taraf paketler onayla kaldırılabilir
-- **Winget Merkezi:** Kaynak listeleme/ekleme/kaldırma, mağaza araması, önerilen profillerden ve arama sonuçlarından kutucuklu seçim, kurulu paket taraması, seçili güncelleme/kaldırma, liste içe/dışa aktarma, 4 hazır profil, blocking pin, sürüm sabitleme (gating), “bu sefer” atlama, pin kaldırma, eksik/benzer paket önerisi, sözleşme onayları ve komut günlüğü
+- **Winget Merkezi:** Kaynak listeleme/ekleme/kaldırma, mağaza araması, önerilen profillerden ve arama sonuçlarından kutucuklu seçim, kurulu paket taraması, seçili güncelleme/kaldırma, liste içe/dışa aktarma, 5 hazır profil (kullandığım uygulamalar profili dahil), blocking pin, sürüm sabitleme (gating), “bu sefer” atlama, pin kaldırma, eksik/benzer paket önerisi, sözleşme onayları ve komut günlüğü
 - **Araç Kutusu:** Bu Bilgisayar klasörleri, Hızlı Erişim, Fotoğraf Görüntüleyici, Explorer/BIOS komutları, “Sahipliği Al” sağ tık menüsü, bağlam menüsü yöneticisi (Blocked listesiyle geri alınabilir), klasik sağ tık menüsü
 - **God Mode:** Windows denetim masası görevlerinin tamamını masaüstünde klasör oluşturmadan, Explorer’ın `shell:::{ED7BA470-8E54-465E-825C-99712043E01C}` protokolüyle ayrı pencerede açar
 - **Yasal uyarı kapısı:** İlk açılışta “Yasal Uyarı ve Sorumluluk Reddi” metni gösterilir; kullanıcı açıkça kabul etmeden uygulama kullanılamaz. Kabul durumu `settings.toml` içinde saklanır.
@@ -132,7 +132,7 @@ cargo test --workspace
 
 Bu kapılar GitHub Actions CI (`.github/workflows/ci.yml`) üzerinde her push ve pull request'te çalışır.
 
-341 birim testi; kural sözleşmesi, registry sandbox, iş motoru, geri alma, Winget ayrıştırma/kaynak/mağaza/liste/politika, ADB komutları, sahiplik, kaldırma/geri yükleme güvenliği, toplu kaldırma ve artık karantinası, başlangıç yedeği, servis/görev/süreç ayrıştırma, temizlik/karantina/parçalama, gelişmiş temizlik/onarım/geri yükleme noktaları, kayıt defteri/kısayol/bağlam menüsü/güncelleme/uzantı/bağlantı/bulucu/disk analizi/kurulum izleme/zorla kaldırma, DISM/Appx/sürücü, donanım JSON/OEM kodlama ve sorun giderme mantığını kapsar. Arayüz doğrulaması; 15 sayfa, uygula/geri al, tarama, sekmeler, toplu seçim ve onay panelleri ekran görüntüleriyle yapılır. Araç Merkezi sayfası 21 aracın tamamını listeler; Android Yönetimi sayfası sürücü taraması, UAD önbelleği ve ADB akışıyla UIA üzerinden doğrulanır.
+351 birim testi; kural sözleşmesi, registry sandbox, iş motoru, geri alma, Winget ayrıştırma/kaynak/mağaza/liste/politika, ADB komutları, sahiplik, kaldırma/geri yükleme güvenliği, toplu kaldırma ve artık karantinası, başlangıç yedeği, servis/görev/süreç ayrıştırma, temizlik/karantina/parçalama, gelişmiş temizlik/onarım/geri yükleme noktaları, kayıt defteri/kısayol/bağlam menüsü/güncelleme/uzantı/bağlantı/bulucu/disk analizi/kurulum izleme/zorla kaldırma, DISM/Appx/sürücü, donanım JSON/OEM kodlama ve sorun giderme mantığını kapsar. Arayüz doğrulaması; 15 sayfa, uygula/geri al, tarama, sekmeler, toplu seçim ve onay panelleri ekran görüntüleriyle yapılır. Araç Merkezi sayfası 21 aracın tamamını listeler; Android Yönetimi sayfası sürücü taraması, UAD önbelleği ve ADB akışıyla UIA üzerinden doğrulanır.
 
 ## Ekran Görüntüleri
 
@@ -163,10 +163,10 @@ Bu kapılar GitHub Actions CI (`.github/workflows/ci.yml`) üzerinde her push ve
 | `crates/sp-core/` | Domain, kural motoru, günlük, kaldırıcı, sistem yönetimi, temizlik, bakım, onarım, Araç Merkezi, donanım, artık ve Winget/Android modelleri |
 | `crates/sp-win/` | Registry, kaldırıcı, sistem yönetimi, temizlik, bakım, onarım, Araç Merkezi, donanım, artık, Winget, Android ve sahiplik adaptörleri |
 | `rules/tweaks/` | 41 TOML ince ayar kuralı |
-| `profiles/` | Winget paket profilleri |
+| `profiles/` | Winget paket profilleri ve bu makinenin uygulama envanteri profili |
 | `assets/` | Uygulama ikonu ve README ekran görüntüleri |
 | `.github/` | CI ve release iş akışları |
-| `docs/` | Teknik kanıt notları, yasal uyarı ve denetim raporları |
+| `docs/` | Teknik kanıt notları, yasal uyarı, uygulama öncesi araç arşivi ve denetim raporları |
 | `release/` | Dağıtım klasörü (ikili dosyalar izlenmez) |
 
 ## Yasal Uyarı ve Sorumluluk Reddi

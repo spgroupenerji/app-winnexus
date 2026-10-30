@@ -1,0 +1,427 @@
+id = "kullandigim"
+ad = "Kullandığım Uygulamalar"
+aciklama = "Bu makinede winget ile yönetilen tüm uygulamalar; yeni makinede tek adımda geri yükleme profili."
+
+[[paket]]
+id = "7zip.7zip"
+ad = "7-Zip"
+
+[[paket]]
+id = "9P8LTPGCBZXD"
+ad = "Wintoys"
+
+[[paket]]
+id = "9PM860492SZD"
+ad = "PC Manager"
+
+[[paket]]
+id = "ACS.CCIDPCSCDriver"
+ad = "ACS CCID PC/SC Driver"
+
+[[paket]]
+id = "ACS.UnifiedPCSCDriver"
+ad = "ACS Unified PC/SC Driver"
+
+[[paket]]
+id = "Alibaba.Qoder"
+ad = "Qoder"
+
+[[paket]]
+id = "Apple.Bonjour"
+ad = "Bonjour"
+
+[[paket]]
+id = "BlenderFoundation.Blender"
+ad = "Blender"
+
+[[paket]]
+id = "Chocolatey.Chocolatey"
+ad = "Chocolatey"
+
+[[paket]]
+id = "Cline.ClineDesktop"
+ad = "Cline"
+
+[[paket]]
+id = "ClockworkMod.UniversalADBDriver"
+ad = "Universal ADB Driver"
+
+[[paket]]
+id = "ElectronicArts.EADesktop"
+ad = "EA app"
+
+[[paket]]
+id = "EpicGames.EpicGamesLauncher"
+ad = "Epic Games Launcher"
+
+[[paket]]
+id = "EpicGames.EpicOnlineServices"
+ad = "Epic Online Services"
+
+[[paket]]
+id = "geeksoftwareGmbH.PDF24Creator"
+ad = "PDF24 Creator"
+
+[[paket]]
+id = "Git.Git"
+ad = "Git"
+
+[[paket]]
+id = "GitHub.cli"
+ad = "GitHub CLI"
+
+[[paket]]
+id = "Google.Antigravity"
+ad = "Antigravity"
+
+[[paket]]
+id = "Google.AntigravityIDE"
+ad = "Antigravity IDE"
+
+[[paket]]
+id = "Google.Chrome"
+ad = "Google Chrome"
+
+[[paket]]
+id = "Google.EarthPro"
+ad = "Google Earth Pro"
+
+[[paket]]
+id = "Google.GeminiDesktop"
+ad = "Gemini"
+
+[[paket]]
+id = "HiBitSoftware.HiBitUninstaller"
+ad = "HiBit Uninstaller"
+
+[[paket]]
+id = "Inkscape.Inkscape"
+ad = "Inkscape"
+
+[[paket]]
+id = "IObit.IObitUnlocker"
+ad = "IObit Unlocker"
+
+[[paket]]
+id = "KDE.Krita"
+ad = "Krita"
+
+[[paket]]
+id = "Klocman.BulkCrapUninstaller"
+ad = "BCUninstaller"
+
+[[paket]]
+id = "LLVM.LLVM"
+ad = "LLVM"
+
+[[paket]]
+id = "Microsoft.AppInstaller"
+ad = "Uygulama Yükleyicisi"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.3_1"
+ad = "ASP.NET Core 3.1"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.5"
+ad = "ASP.NET Core 5"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.6"
+ad = "ASP.NET Core 6"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.7"
+ad = "ASP.NET Core 7"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.8"
+ad = "ASP.NET Core 8"
+
+[[paket]]
+id = "Microsoft.DotNet.AspNetCore.9"
+ad = "ASP.NET Core 9"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.10"
+ad = "Windows Desktop Runtime 10"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.3_1"
+ad = "Windows Desktop Runtime 3.1"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.5"
+ad = "Windows Desktop Runtime 5"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.6"
+ad = "Windows Desktop Runtime 6"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.7"
+ad = "Windows Desktop Runtime 7"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.8.x64"
+ad = "Windows Desktop Runtime 8"
+
+[[paket]]
+id = "Microsoft.DotNet.DesktopRuntime.9"
+ad = "Windows Desktop Runtime 9"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.3_1"
+ad = ".NET Hosting Bundle 3.1"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.5"
+ad = ".NET Hosting Bundle 5"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.6"
+ad = ".NET Hosting Bundle 6"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.7"
+ad = ".NET Hosting Bundle 7"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.8"
+ad = ".NET Hosting Bundle 8"
+
+[[paket]]
+id = "Microsoft.DotNet.HostingBundle.9"
+ad = ".NET Hosting Bundle 9"
+
+[[paket]]
+id = "Microsoft.DotNet.Native.Runtime"
+ad = ".NET Native Runtime 2.2"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.3_1"
+ad = ".NET Runtime 3.1"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.5"
+ad = ".NET Runtime 5"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.6"
+ad = ".NET Runtime 6"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.7"
+ad = ".NET Runtime 7"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.8"
+ad = ".NET Runtime 8"
+
+[[paket]]
+id = "Microsoft.DotNet.Runtime.9"
+ad = ".NET Runtime 9"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.3_1"
+ad = ".NET SDK 3.1"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.5"
+ad = ".NET SDK 5"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.6"
+ad = ".NET SDK 6"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.7"
+ad = ".NET SDK 7"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.8"
+ad = ".NET SDK 8"
+
+[[paket]]
+id = "Microsoft.DotNet.SDK.9"
+ad = ".NET SDK 9"
+
+[[paket]]
+id = "Microsoft.UI.Xaml.2.8"
+ad = "Microsoft UI Xaml 2.8"
+
+[[paket]]
+id = "Microsoft.VCLibs.14"
+ad = "VCLibs 14 UWP Runtime"
+
+[[paket]]
+id = "Microsoft.VCLibs.Desktop.14"
+ad = "VCLibs 14 UWP Desktop Runtime"
+
+[[paket]]
+id = "Microsoft.VCRedist.2005.x86"
+ad = "Visual C++ 2005 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2008.x64"
+ad = "Visual C++ 2008 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2008.x86"
+ad = "Visual C++ 2008 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2010.x64"
+ad = "Visual C++ 2010 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2010.x86"
+ad = "Visual C++ 2010 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2012.x64"
+ad = "Visual C++ 2012 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2012.x86"
+ad = "Visual C++ 2012 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2013.x64"
+ad = "Visual C++ 2013 x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2013.x86"
+ad = "Visual C++ 2013 x86"
+
+[[paket]]
+id = "Microsoft.VCRedist.2015+.x64"
+ad = "Visual C++ 2015+ x64"
+
+[[paket]]
+id = "Microsoft.VCRedist.2015+.x86"
+ad = "Visual C++ 2015+ x86"
+
+[[paket]]
+id = "Microsoft.VisualStudioCode"
+ad = "Visual Studio Code"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.0"
+ad = "Windows App Runtime 1.0"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.1"
+ad = "Windows App Runtime 1.1"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.2"
+ad = "Windows App Runtime 1.2"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.3"
+ad = "Windows App Runtime 1.3"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.4"
+ad = "Windows App Runtime 1.4"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.5"
+ad = "Windows App Runtime 1.5"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.6"
+ad = "Windows App Runtime 1.6"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.7"
+ad = "Windows App Runtime 1.7"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.1.8"
+ad = "Windows App Runtime 1.8"
+
+[[paket]]
+id = "Microsoft.WindowsAppRuntime.2"
+ad = "Windows App Runtime 2"
+
+[[paket]]
+id = "Microsoft.WindowsSDK.10.0.26100"
+ad = "Windows SDK 10.0.26100"
+
+[[paket]]
+id = "Mozilla.Thunderbird.tr"
+ad = "Mozilla Thunderbird"
+
+[[paket]]
+id = "Notepad++.Notepad++"
+ad = "Notepad++"
+
+[[paket]]
+id = "Obsidian.Obsidian"
+ad = "Obsidian"
+
+[[paket]]
+id = "ONLYOFFICE.DesktopEditors"
+ad = "ONLYOFFICE"
+
+[[paket]]
+id = "OpenAI.ChatGPT"
+ad = "ChatGPT"
+
+[[paket]]
+id = "OpenJS.NodeJS.LTS"
+ad = "Node.js"
+
+[[paket]]
+id = "Oracle.JavaRuntimeEnvironment"
+ad = "Java 8 Runtime"
+
+[[paket]]
+id = "Oracle.JDK.24"
+ad = "Java SE Development Kit 24"
+
+[[paket]]
+id = "OSGeo.QGIS_LTR"
+ad = "QGIS LTR"
+
+[[paket]]
+id = "PDFgear.PDFgear"
+ad = "PDFgear"
+
+[[paket]]
+id = "PVsyst.PVsyst"
+ad = "PVsyst"
+
+[[paket]]
+id = "Python.Launcher"
+ad = "Python Launcher"
+
+[[paket]]
+id = "Rustlang.Rustup"
+ad = "Rustup"
+
+[[paket]]
+id = "SST.OpenCodeDesktop"
+ad = "OpenCode"
+
+[[paket]]
+id = "Thales.SafeNetAuthenticationClient"
+ad = "SafeNet Authentication Client"
+
+[[paket]]
+id = "VideoLAN.VLC"
+ad = "VLC"
+
+[[paket]]
+id = "WiseCleaner.WiseMemoryOptimizer"
+ad = "Wise Memory Optimizer"
+
+[[paket]]
+id = "Zen-Team.Zen-Browser"
+ad = "Zen Browser"
+
+[[paket]]
+id = "ZhipuAI.ZCode"
+ad = "ZCode"

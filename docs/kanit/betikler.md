@@ -27,13 +27,13 @@ Durum: İlk 5 kural, uygulama içi doğrulama ve geri alma ile test edilecek.
 
 | Kural | Registry yolu | Değer | Kaynak |
 |---|---|---|---|
-| `sistem.bu_bilgisayar_gizle` | `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{GUID}\PropertyBag` | `ThisPCPolicy` = `Hide` | `Windows10_BuBilgisayar_Klasörlerini_Kaldırma.bat` |
-| `sistem.hizli_erisim_kapat` | `HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer` | `HubMode` = 1 | `Windows_Hızlı Erişim Kaldır Geri Yükle.bat` |
-| `sistem.fotograf_goruntuleyici` | `HKLM\SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations` | 12 uzantı = `PhotoViewer.FileAssoc.Tiff` | `Windows_Photo Viewer Etkinleştirme.bat` |
+| `sistem.bu_bilgisayar_gizle` | `HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{GUID}\PropertyBag` | `ThisPCPolicy` = `Hide` | [`bu-bilgisayar-klasorleri.bat`](../uygulama-oncesi-araclar/betikler/bu-bilgisayar-klasorleri.bat) |
+| `sistem.hizli_erisim_kapat` | `HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer` | `HubMode` = 1 | [`hizli-erisim-ac-kapat.bat`](../uygulama-oncesi-araclar/betikler/hizli-erisim-ac-kapat.bat) |
+| `sistem.fotograf_goruntuleyici` | `HKLM\SOFTWARE\Microsoft\Windows Photo Viewer\Capabilities\FileAssociations` | 12 uzantı = `PhotoViewer.FileAssoc.Tiff` | [`fotograf-goruntuleyici-etkinlestir.bat`](../uygulama-oncesi-araclar/betikler/fotograf-goruntuleyici-etkinlestir.bat) |
 
 Komutlar:
-- Explorer yeniden başlatma: `taskkill /f /im explorer.exe` + `explorer.exe`.
-- BIOS'a yeniden başlatma: `shutdown /r /fw /t 0`; UEFI ve üretici desteği gerekir.
+- Explorer yeniden başlatma: `taskkill /f /im explorer.exe` + `explorer.exe` ([`explorer-yeniden-baslat.lnk`](../uygulama-oncesi-araclar/betikler/explorer-yeniden-baslat.lnk)).
+- BIOS'a yeniden başlatma: `shutdown /r /fw /t 0`; UEFI ve üretici desteği gerekir ([`bios-yeniden-baslat.bat`](../uygulama-oncesi-araclar/betikler/bios-yeniden-baslat.bat)).
 
 ## Ek Kurallar
 
@@ -50,7 +50,7 @@ Komutlar:
 
 ## Doğrulama Notları
 
-- Tüm kurallar kullanıcı kapsamındadır; yönetici izni gerektirmez.
+- Kurallar HKCU veya HKLM kapsamına göre değişir; HKLM kapsamlı kurallar yönetici izni gerektirir.
 - Her kural algılama, uygulama ve doğrulama adımlarına sahiptir.
 - Geri alma, işlem öncesi değeri günlükten geri yazar; değer yoksa siler.
 - Windows 11 25H2 (build 26200) üzerinde manuel doğrulama yapılacaktır.

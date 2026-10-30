@@ -49,3 +49,15 @@ ad = "O&O ShutUp10"
 [[paket]]
 id = "WiseCleaner.WiseMemoryOptimizer"
 ad = "Wise Memory Optimizer"
+
+[[paket]]
+id = "HiBitSoftware.HiBitUninstaller"
+ad = "HiBit Uninstaller"
+
+[[paket]]
+id = "Klocman.BulkCrapUninstaller"
+ad = "BCUninstaller"
+
+[[paket]]
+id = "ChuyuTeam.DISM++"
+ad = "DISM++"
