@@ -173,26 +173,7 @@ impl WinNexusApp {
                     .into_any_element()
             })
             .collect::<Vec<_>>();
-        v_flex()
-            .gap_4()
-            .child(
-                v_flex()
-                    .gap_1()
-                    .child(
-                        div()
-                            .text_2xl()
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child("Araç Merkezi"),
-                    )
-                    .child(
-                        div()
-                            .text_sm()
-                            .text_color(cx.theme().muted_foreground)
-                            .child("Kaldırma, temizlik, arama ve sistem yönetimi araçlarının tamamı tek merkezde. Mevcut araçlar ilgili sayfada açılır."),
-                    ),
-            )
-            .children(paneller)
-            .into_any_element()
+        v_flex().gap_4().children(paneller).into_any_element()
     }
 
     fn arac_merkezi_satiri(
@@ -319,7 +300,7 @@ impl WinNexusApp {
                                 cx.notify();
                             })),
                     )
-                    .child(div().text_2xl().font_weight(FontWeight::SEMIBOLD).child(ad)),
+                    .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(ad)),
             )
             .child(
                 div()
@@ -537,7 +518,7 @@ impl WinNexusApp {
         }
     }
 
-    fn merkez_guncelleme_tara(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn merkez_guncelleme_tara(&mut self, cx: &mut Context<Self>) {
         let servis = self.gelismis_servis.clone();
         self.merkez_arka_plan(
             cx,
@@ -555,7 +536,7 @@ impl WinNexusApp {
         );
     }
 
-    fn merkez_uzanti_tara(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn merkez_uzanti_tara(&mut self, cx: &mut Context<Self>) {
         let servis = self.gelismis_servis.clone();
         self.merkez_arka_plan(
             cx,
@@ -571,7 +552,7 @@ impl WinNexusApp {
         );
     }
 
-    fn merkez_baglanti_tara(&mut self, cx: &mut Context<Self>) {
+    pub(super) fn merkez_baglanti_tara(&mut self, cx: &mut Context<Self>) {
         let servis = self.gelismis_servis.clone();
         self.merkez_arka_plan(
             cx,

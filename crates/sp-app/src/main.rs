@@ -1,11 +1,11 @@
 #![windows_subsystem = "windows"]
 
 mod app;
+mod tema;
 
 use app::WinNexusApp;
-use gpui_kit::component::*;
 use gpui_kit::*;
-use sp_core::ayarlar::{Ayarlar, Tema};
+use sp_core::ayarlar::Ayarlar;
 use sp_core::dizinler::Dizinler;
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -86,42 +86,40 @@ fn main() {
         }
     }));
 
-    gpui_kit::application().run(move |cx| {
-        gpui_kit::init(cx);
-        if sp_win::animasyonlar_kapali_mi() {
-            cx.set_reduce_motion(true);
-        }
+    gpui_kit::application()
+        .with_assets(gpui_kit::assets::Assets)
+        .run(move |cx| {
+            gpui_kit::init(cx);
+            if sp_win::animasyonlar_kapali_mi() {
+                cx.set_reduce_motion(true);
+            }
 
-        let tema = dizinler
-            .as_ref()
-            .ok()
-            .and_then(|dizinler| Ayarlar::yukle(&dizinler.ayarlar_dosyasi()).ok())
-            .map(|ayarlar| ayarlar.tema)
-            .unwrap_or_default();
-        let mod_ = match tema {
-            Tema::Koyu => ThemeMode::Dark,
-            _ => ThemeMode::Light,
-        };
-        Theme::change(mod_, None, cx);
+            let tema = dizinler
+                .as_ref()
+                .ok()
+                .and_then(|dizinler| Ayarlar::yukle(&dizinler.ayarlar_dosyasi()).ok())
+                .map(|ayarlar| ayarlar.tema)
+                .unwrap_or_default();
+            tema::tema_ayarla(cx, tema);
 
-        let ikon = image::load_from_memory(ICON_PNG)
-            .ok()
-            .map(|goruntu| Arc::new(goruntu.to_rgba8()));
-        let pencere = WindowOptions {
-            icon: ikon,
-            window_bounds: Some(WindowBounds::Maximized(Bounds::new(
-                point(px(100.), px(100.)),
-                size(px(1280.), px(860.)),
-            ))),
-            window_min_size: Some(size(px(960.), px(640.))),
-            titlebar: Some(TitlebarOptions {
-                title: Some("SP GROUP WinNexus".into()),
+            let ikon = image::load_from_memory(ICON_PNG)
+                .ok()
+                .map(|goruntu| Arc::new(goruntu.to_rgba8()));
+            let pencere = WindowOptions {
+                icon: ikon,
+                window_bounds: Some(WindowBounds::Maximized(Bounds::new(
+                    point(px(100.), px(100.)),
+                    size(px(1280.), px(860.)),
+                ))),
+                window_min_size: Some(size(px(960.), px(640.))),
+                titlebar: Some(TitlebarOptions {
+                    title: Some("SP GROUP WinNexus".into()),
+                    ..Default::default()
+                }),
                 ..Default::default()
-            }),
-            ..Default::default()
-        };
+            };
 
-        gpui_kit::open_window(pencere, cx, |_, cx| cx.new(WinNexusApp::new))
-            .expect("Pencere açılamadı");
-    });
+            gpui_kit::open_window(pencere, cx, |_, cx| cx.new(WinNexusApp::new))
+                .expect("Pencere açılamadı");
+        });
 }

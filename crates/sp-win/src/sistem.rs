@@ -6,6 +6,22 @@ use sp_core::os::Surum;
 
 pub const GOD_MODE_CLSID: &str = "shell:::{ED7BA470-8E54-465E-825C-99712043E01C}";
 
+pub fn baslik_cubugu_karanlik_ayarla(ham_tutamak: isize, karanlik: bool) {
+    use windows_sys::Win32::Foundation::HWND;
+    use windows_sys::Win32::Graphics::Dwm::{DwmSetWindowAttribute, DWMWA_USE_IMMERSIVE_DARK_MODE};
+
+    let hwnd: HWND = ham_tutamak as HWND;
+    let deger: i32 = i32::from(karanlik);
+    unsafe {
+        DwmSetWindowAttribute(
+            hwnd,
+            DWMWA_USE_IMMERSIVE_DARK_MODE as u32,
+            std::ptr::addr_of!(deger).cast(),
+            std::mem::size_of::<i32>() as u32,
+        );
+    }
+}
+
 pub fn god_mode_ac() -> Sonuc<()> {
     std::process::Command::new("explorer.exe")
         .arg(GOD_MODE_CLSID)

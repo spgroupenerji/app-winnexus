@@ -49,22 +49,6 @@ impl WinNexusApp {
             .collect::<Vec<_>>();
         v_flex()
             .gap_4()
-            .child(
-                v_flex()
-                    .gap_1()
-                    .child(
-                        div()
-                            .text_2xl()
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .child("Android Yönetimi"),
-                    )
-                    .child(
-                        div()
-                            .text_sm()
-                            .text_color(cx.theme().muted_foreground)
-                            .child("ADB, sürücü, marka uyarıları ve açık kaynak paket veritabanıyla güvenli bloatware yönetimi."),
-                    ),
-            )
             .child(self.android_onay_paneli(cx))
             .child(self.android_durum_kutulari(cx))
             .child(self.android_cihaz_karti(cx))

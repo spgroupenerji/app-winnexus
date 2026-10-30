@@ -6263,7 +6263,9 @@ version = "0.1.0"
 dependencies = [
  "gpui-kit",
  "image",
+ "raw-window-handle",
  "rfd",
+ "serde_json",
  "sp-core",
  "sp-win",
  "tracing",

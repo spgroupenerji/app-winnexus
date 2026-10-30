@@ -24,6 +24,9 @@
 /.claude/
 /CLAUDE.md
 
+# Yerel UI doğrulama görselleri (scripts/ui-palet.ps1 yeniden üretir)
+/docs/kanit/ui-*.png
+
 # Sırlar ve yerel ortam
 .env
 .env.*

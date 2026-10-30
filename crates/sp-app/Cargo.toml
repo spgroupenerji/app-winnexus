@@ -15,8 +15,10 @@ winres = "0.1"
 [dependencies]
 gpui-kit.workspace = true
 image = { version = "0.25", default-features = false, features = ["png"] }
+serde_json.workspace = true
 sp-core = { path = "../sp-core" }
 sp-win = { path = "../sp-win" }
 tracing.workspace = true
 tracing-subscriber.workspace = true
 rfd = "0.17"
+raw-window-handle.workspace = true
