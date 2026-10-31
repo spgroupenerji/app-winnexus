@@ -49,7 +49,9 @@ impl SidebarItem for YanMenuOgesi {
             buton.ghost()
         };
         let tikla = self.tikla;
-        buton.on_click(move |olay, window, cx| tikla(olay, window, cx))
+        buton
+            .toggled(self.aktif)
+            .on_click(move |olay, window, cx| tikla(olay, window, cx))
     }
 }
 
