@@ -1,4 +1,4 @@
-use crate::{ICON_PNG, SURUM};
+use crate::SURUM;
 use gpui_kit::component::button::*;
 use gpui_kit::component::checkbox::Checkbox;
 use gpui_kit::component::input::{Input, InputEvent, InputState, Textarea, TextareaState};
@@ -73,6 +73,7 @@ const YASAL_UYARI: &str = include_str!("../../../docs/yasal-uyari.txt");
 const DOKUNMA_HEDEFI_PX: f32 = 44.;
 const UST_CUBUK_YUKSEKLIGI_PX: f32 = 60.;
 const BASLIK_CUBUGU_YUKSEKLIGI_PX: f32 = 52.;
+const DONANIM_ETIKET_GENISLIGI_PX: f32 = 110.;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Sayfa {
@@ -7891,6 +7892,131 @@ impl WinNexusApp {
         .detach();
     }
 
+    fn donanim_ozeti_satiri(etiket: &str, deger: String, cx: &mut Context<Self>) -> AnyElement {
+        h_flex()
+            .gap_3()
+            .items_start()
+            .child(
+                div()
+                    .w(px(DONANIM_ETIKET_GENISLIGI_PX))
+                    .flex_shrink_0()
+                    .text_sm()
+                    .text_color(cx.theme().muted_foreground)
+                    .child(etiket.to_string()),
+            )
+            .child(div().text_sm().child(deger))
+            .into_any_element()
+    }
+
+    fn donanim_ozeti_karti(&self, cx: &mut Context<Self>) -> AnyElement {
+        let ozet = self.sistem_ozeti.as_ref();
+        let cpu = self.cpu_bilgisi.first();
+        let gpu = self.gpu_bilgisi.first();
+        let ram = self.ram_bilgisi.as_ref();
+        let disk_sayisi = self.diskler.len();
+        let disk_gb: f64 = self.diskler.iter().map(|disk| disk.boyut_gb).sum();
+        let veri_var =
+            ozet.is_some() || cpu.is_some() || gpu.is_some() || ram.is_some() || disk_sayisi > 0;
+        let mut icerik = v_flex().gap_2();
+        if self.donanim_taraniyor {
+            icerik = icerik.child(
+                div()
+                    .text_sm()
+                    .text_color(cx.theme().muted_foreground)
+                    .child("Donanım bilgileri okunuyor..."),
+            );
+        } else if !veri_var {
+            icerik = icerik.child(
+                div()
+                    .text_sm()
+                    .text_color(cx.theme().muted_foreground)
+                    .child("Donanım bilgileri henüz okunmadı."),
+            );
+        } else {
+            if let Some(ozet) = ozet {
+                icerik = icerik.child(Self::donanim_ozeti_satiri(
+                    "Sistem",
+                    format!("{} · {}", ozet.bilgisayar, ozet.isletim_sistemi),
+                    cx,
+                ));
+            }
+            if let Some(cpu) = cpu {
+                let ek = if self.cpu_bilgisi.len() > 1 {
+                    format!(" +{} işlemci", self.cpu_bilgisi.len() - 1)
+                } else {
+                    String::new()
+                };
+                icerik = icerik.child(Self::donanim_ozeti_satiri(
+                    "İşlemci",
+                    format!("{} · {} çekirdek{}", cpu.ad, cpu.cekirdek, ek),
+                    cx,
+                ));
+            }
+            if let Some(gpu) = gpu {
+                let ek = if self.gpu_bilgisi.len() > 1 {
+                    format!(" +{} ekran kartı", self.gpu_bilgisi.len() - 1)
+                } else {
+                    String::new()
+                };
+                icerik = icerik.child(Self::donanim_ozeti_satiri(
+                    "Ekran Kartı",
+                    format!("{}{}", gpu.ad, ek),
+                    cx,
+                ));
+            }
+            if let Some(ram) = ram {
+                icerik = icerik.child(Self::donanim_ozeti_satiri(
+                    "Bellek",
+                    format!("{} MB", ram.toplam_mb),
+                    cx,
+                ));
+            }
+            if disk_sayisi > 0 {
+                icerik = icerik.child(Self::donanim_ozeti_satiri(
+                    "Disk",
+                    format!("{disk_sayisi} disk · {} GB", disk_gb.round() as u64),
+                    cx,
+                ));
+            }
+        }
+        if let Some(hata) = &self.donanim_hata {
+            icerik = icerik.child(self.hata_kutusu(hata, cx));
+        }
+        let eylemler = h_flex()
+            .gap_2()
+            .child(
+                Button::new("donanim-ozet-oku")
+                    .primary()
+                    .label(if self.donanim_taraniyor {
+                        "Okunuyor..."
+                    } else if veri_var {
+                        "Yenile"
+                    } else {
+                        "Donanım Bilgilerini Oku"
+                    })
+                    .disabled(self.donanim_taraniyor)
+                    .on_click(cx.listener(|this, _, _, cx| this.donanim_tara(cx))),
+            )
+            .child(
+                Button::new("donanim-ozet-ayrinti")
+                    .label("Ayrıntılar")
+                    .on_click(cx.listener(|this, _, window, cx| {
+                        this.sayfaya_git(Sayfa::Donanim, window, cx);
+                    })),
+            );
+        self.bolum_karti(
+            "Donanım Özeti".to_string(),
+            "Sistem, işlemci, ekran kartı, bellek ve disk özeti; ayrıntılar Donanım sayfasında."
+                .to_string(),
+            v_flex()
+                .gap_3()
+                .child(icerik)
+                .child(eylemler)
+                .into_any_element(),
+            cx,
+        )
+    }
+
     fn donanim_sayfasi(&self, cx: &mut Context<Self>) -> AnyElement {
         let ozet = self.sistem_ozeti.clone();
         let cpu = self.cpu_bilgisi.clone();
@@ -9479,7 +9605,7 @@ impl WinNexusApp {
             .icon(bolum.ikon())
             .label(bolum.baslik())
             .with_size(gpui_kit::component::Size::Small)
-            .px_3();
+            .px_2();
         let buton = if self.sayfa.bolum() == Some(bolum) {
             buton.primary()
         } else {
@@ -9529,15 +9655,7 @@ impl WinNexusApp {
     }
 
     fn ust_gezinme(&self, cx: &mut Context<Self>) -> impl IntoElement {
-        let mut sol = h_flex().flex_shrink_0().gap_1().items_center().child(
-            img(ImageSource::Image(Arc::new(Image::from_bytes(
-                ImageFormat::Png,
-                ICON_PNG.to_vec(),
-            ))))
-            .w(px(28.))
-            .h(px(28.))
-            .rounded_md(),
-        );
+        let mut sol = h_flex().flex_shrink_0().gap_1().items_center();
         for bolum in Bolum::HEPSI {
             sol = sol.child(self.bolum_butonu(bolum, cx));
         }
@@ -9561,8 +9679,6 @@ impl WinNexusApp {
             .border_color(cx.theme().border)
             .child(sol)
             .child(div().flex_1())
-            .child(self.tema_secici(cx))
-            .child(div().w(px(1.)).h(px(28.)).bg(cx.theme().border))
             .child(Self::dokunma_hedefi(
                 Button::new("tercih-ice")
                     .icon(IconName::ArrowDown)
@@ -10013,7 +10129,19 @@ impl WinNexusApp {
     }
 
     fn genel_bakis(&self, cx: &mut Context<Self>) -> AnyElement {
-        let toplam = self.kurallar.len();
+        v_flex()
+            .gap_4()
+            .child(self.sistem_durumu(cx))
+            .child(self.donanim_ozeti_karti(cx))
+            .child(self.tarama_karti(cx))
+            .child(self.modul_vitrini(cx))
+            .child(self.son_islemler(cx))
+            .into_any_element()
+    }
+
+    fn ince_ayarlar(&self, cx: &mut Context<Self>) -> AnyElement {
+        let kurallar = self.kurallar.clone();
+        let toplam = kurallar.len();
         let uygulanan = self
             .durumlar
             .values()
@@ -10029,51 +10157,6 @@ impl WinNexusApp {
             .values()
             .filter(|durum| **durum == KuralDurumu::Desteklenmiyor)
             .count();
-
-        v_flex()
-            .gap_4()
-            .child(self.sistem_durumu(cx))
-            .child(self.tarama_karti(cx))
-            .child(
-                v_flex()
-                    .gap_2()
-                    .child(Self::bolum_basligi("İnce ayar özeti", cx))
-                    .child(
-                        h_flex()
-                            .gap_3()
-                            .child(Self::kart(
-                                "Toplam kural",
-                                toplam.to_string(),
-                                IconName::LayoutDashboard,
-                                cx,
-                            ))
-                            .child(Self::kart(
-                                "Uygulanan",
-                                uygulanan.to_string(),
-                                IconName::CircleCheck,
-                                cx,
-                            ))
-                            .child(Self::kart(
-                                "Bekleyen",
-                                bekleyen.to_string(),
-                                IconName::CircleAlert,
-                                cx,
-                            ))
-                            .child(Self::kart(
-                                "Desteklenmeyen",
-                                desteklenmeyen.to_string(),
-                                IconName::CircleX,
-                                cx,
-                            )),
-                    ),
-            )
-            .child(self.modul_vitrini(cx))
-            .child(self.son_islemler(cx))
-            .into_any_element()
-    }
-
-    fn ince_ayarlar(&self, cx: &mut Context<Self>) -> AnyElement {
-        let kurallar = self.kurallar.clone();
         let mut gruplar = v_flex().flex_1().min_w_0().gap_6();
         for kategori in KuralKategorisi::HEPSI {
             let bolum_kurallari = kurallar
@@ -10107,11 +10190,23 @@ impl WinNexusApp {
             }
             gruplar = gruplar.child(bolum);
         }
-        h_flex()
-            .gap_6()
-            .items_start()
-            .child(gruplar)
-            .child(self.detay_paneli(cx))
+        v_flex()
+            .gap_3()
+            .child(
+                div()
+                    .text_sm()
+                    .text_color(cx.theme().muted_foreground)
+                    .child(format!(
+                        "Toplam {toplam} kural · {uygulanan} uygulanan · {bekleyen} bekleyen · {desteklenmeyen} desteklenmeyen"
+                    )),
+            )
+            .child(
+                h_flex()
+                    .gap_6()
+                    .items_start()
+                    .child(gruplar)
+                    .child(self.detay_paneli(cx)),
+            )
             .into_any_element()
     }
 
@@ -10466,9 +10561,20 @@ impl WinNexusApp {
         );
         self.bolum_karti(
             "Tercihler".to_string(),
-            "Tema üst çubuktan seçilir; bu dosya kalan tüm WinNexus tercihlerini taşır.".to_string(),
+            "Tema bu bölümden seçilir; bu dosya kalan tüm WinNexus tercihlerini taşır.".to_string(),
             v_flex()
                 .gap_3()
+                .child(
+                    v_flex()
+                        .gap_1()
+                        .child(
+                            div()
+                                .text_sm()
+                                .font_weight(FontWeight::MEDIUM)
+                                .child("Tema"),
+                        )
+                        .child(self.tema_secici(cx)),
+                )
                 .child(
                     div()
                         .text_sm()
