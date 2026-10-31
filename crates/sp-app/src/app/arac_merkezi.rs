@@ -1,313 +1,9 @@
 use super::*;
 
-#[derive(Clone, Copy)]
-enum AracHedef {
-    Sayfa(Sayfa),
-    Panel(MerkezAraci),
-}
-
-#[derive(Clone, Copy)]
-struct AracKaydi {
-    ad: &'static str,
-    aciklama: &'static str,
-    hedef: AracHedef,
-}
-
-const KALDIRMA_ARACLARI: [AracKaydi; 6] = [
-    AracKaydi {
-        ad: "Zorla kaldır",
-        aciklama: "Kaldırma komutu çalışmayan uygulamaların klasörünü karantinaya alır ve kayıt anahtarını yedekleyerek siler.",
-        hedef: AracHedef::Panel(MerkezAraci::ZorlaKaldir),
-    },
-    AracKaydi {
-        ad: "Kurulum İzleme",
-        aciklama: "Kurulum öncesi ve sonrası dosya/kayıt anlık görüntüsünü karşılaştırarak değişiklikleri raporlar.",
-        hedef: AracHedef::Panel(MerkezAraci::KurulumIzleme),
-    },
-    AracKaydi {
-        ad: "Windows Mağazası Uygulama Yöneticisi",
-        aciklama: "Store uygulamalarını listeler ve seçilenleri kaldırır.",
-        hedef: AracHedef::Sayfa(Sayfa::Kaldirici),
-    },
-    AracKaydi {
-        ad: "Program Bileşen Yöneticisi",
-        aciklama: "Windows isteğe bağlı bileşenlerini listeler, etkinleştirir veya kaldırır.",
-        hedef: AracHedef::Sayfa(Sayfa::Bakim),
-    },
-    AracKaydi {
-        ad: "Windows Güncelleme Yöneticisi",
-        aciklama: "Kurulu Windows güncellemelerini listeler ve kaldırılabilir olanları kaldırır.",
-        hedef: AracHedef::Panel(MerkezAraci::WindowsGuncelleme),
-    },
-    AracKaydi {
-        ad: "Tarayıcı Uzantısı Yöneticisi",
-        aciklama: "Chrome, Edge, Brave, Vivaldi, Yandex, Opera ve Firefox uzantılarını listeler ve karantinaya alır.",
-        hedef: AracHedef::Panel(MerkezAraci::TarayiciUzantilari),
-    },
-];
-
-const TEMIZLIK_ARACLARI: [AracKaydi; 4] = [
-    AracKaydi {
-        ad: "Kayıt Defteri Temizleyici",
-        aciklama: "Doğrulanabilir kayıt defteri artıklarını .reg yedeğiyle karantinaya taşır.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-    AracKaydi {
-        ad: "Gereksiz Dosya Temizleyici",
-        aciklama: "Geçici dosyaları ve tarayıcı önbelleklerini boyutlarıyla tarar ve temizler.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-    AracKaydi {
-        ad: "Boş Klasör Temizleyici",
-        aciklama: "Seçilen kök altındaki boş klasörleri bulur ve siler.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-    AracKaydi {
-        ad: "Kısayolları Düzelt",
-        aciklama: "Hedefi bulunmayan kısayolları tespit eder ve karantinaya taşır.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-];
-
-const ARAMA_ARACLARI: [AracKaydi; 4] = [
-    AracKaydi {
-        ad: "Dosya ve Kayıt Bulucu",
-        aciklama: "Dosya adlarında ve kayıt defterinde joker destekli arama yapar.",
-        hedef: AracHedef::Panel(MerkezAraci::DosyaKayitBulucu),
-    },
-    AracKaydi {
-        ad: "Kopya Dosya Bulucu",
-        aciklama: "Aynı boyut ve içerik özetine sahip dosyaları gruplar ve karantinaya taşır.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-    AracKaydi {
-        ad: "Disk Analisti",
-        aciklama: "Klasör ve dosya boyutlarını en büyükten küçüğe analiz eder.",
-        hedef: AracHedef::Panel(MerkezAraci::DiskAnalisti),
-    },
-    AracKaydi {
-        ad: "Dosyaları kalıcı sil",
-        aciklama: "Dosyayı çok geçişli rastgele veriyle üzerine yazarak parçalar.",
-        hedef: AracHedef::Sayfa(Sayfa::Temizlik),
-    },
-];
-
-const SISTEM_ARACLARI: [AracKaydi; 7] = [
-    AracKaydi {
-        ad: "İşlem Yöneticisi",
-        aciklama: "Çalışan süreçleri listeler ve seçilen süreci sonlandırır.",
-        hedef: AracHedef::Sayfa(Sayfa::SistemYonetimi),
-    },
-    AracKaydi {
-        ad: "Bağlantı Yöneticisi",
-        aciklama: "Etkin TCP/UDP bağlantılarını süreç bilgisiyle listeler.",
-        hedef: AracHedef::Panel(MerkezAraci::BaglantiYoneticisi),
-    },
-    AracKaydi {
-        ad: "Başlangıç Yöneticisi",
-        aciklama: "Başlangıç programlarını listeler, etkinleştirir veya devre dışı bırakır.",
-        hedef: AracHedef::Sayfa(Sayfa::SistemYonetimi),
-    },
-    AracKaydi {
-        ad: "Hizmet Yöneticisi",
-        aciklama: "Windows hizmetlerini listeler, başlatır, durdurur ve başlangıç türünü değiştirir.",
-        hedef: AracHedef::Sayfa(Sayfa::SistemYonetimi),
-    },
-    AracKaydi {
-        ad: "Zamanlanmış Görev Yöneticisi",
-        aciklama: "Zamanlanmış görevleri listeler, çalıştırır ve etkinlik durumunu değiştirir.",
-        hedef: AracHedef::Sayfa(Sayfa::SistemYonetimi),
-    },
-    AracKaydi {
-        ad: "Sağtık Menü Yöneticisi",
-        aciklama: "Dosya sağ tık menüsü bileşenlerini listeler, devre dışı bırakır ve klasik menüyü yönetir.",
-        hedef: AracHedef::Sayfa(Sayfa::Araclar),
-    },
-    AracKaydi {
-        ad: "Sistem Geri Yükleme Yöneticisi",
-        aciklama: "Geri yükleme noktalarını listeler, oluşturur, geri döner ve temizler.",
-        hedef: AracHedef::Sayfa(Sayfa::Bakim),
-    },
-];
-
 impl WinNexusApp {
-    pub(super) fn arac_merkezi_sayfasi(
-        &mut self,
-        window: &mut Window,
-        cx: &mut Context<Self>,
-    ) -> AnyElement {
-        if let Some(arac) = self.merkez_araci {
-            return self.arac_merkezi_detayi(arac, window, cx);
-        }
-        let gruplar = [
-            (
-                "Kaldırma ve Uygulama Yönetimi",
-                KALDIRMA_ARACLARI.as_slice(),
-            ),
-            ("Temizlik", TEMIZLIK_ARACLARI.as_slice()),
-            ("Arama ve Analiz", ARAMA_ARACLARI.as_slice()),
-            ("Sistem Yönetimi", SISTEM_ARACLARI.as_slice()),
-        ];
-        let mut sira = 0usize;
-        let paneller = gruplar
-            .into_iter()
-            .map(|(baslik, araclar)| {
-                let satirlar = araclar
-                    .iter()
-                    .map(|arac| {
-                        let kimlik = sira;
-                        sira += 1;
-                        self.arac_merkezi_satiri(kimlik, *arac, cx)
-                    })
-                    .collect::<Vec<_>>();
-                v_flex()
-                    .gap_2()
-                    .child(
-                        div()
-                            .text_sm()
-                            .font_weight(FontWeight::SEMIBOLD)
-                            .text_color(cx.theme().muted_foreground)
-                            .child(baslik),
-                    )
-                    .children(satirlar)
-                    .into_any_element()
-            })
-            .collect::<Vec<_>>();
-        v_flex().gap_4().children(paneller).into_any_element()
-    }
-
-    fn arac_merkezi_satiri(
-        &self,
-        sira: usize,
-        kayit: AracKaydi,
-        cx: &mut Context<Self>,
-    ) -> AnyElement {
-        let hedef = kayit.hedef;
-        h_flex()
-            .justify_between()
-            .items_center()
-            .gap_4()
-            .p_3()
-            .rounded_md()
-            .border_1()
-            .border_color(cx.theme().border)
-            .child(
-                v_flex()
-                    .gap_1()
-                    .min_w_0()
-                    .child(div().font_weight(FontWeight::SEMIBOLD).child(kayit.ad))
-                    .child(
-                        div()
-                            .text_sm()
-                            .text_color(cx.theme().muted_foreground)
-                            .child(kayit.aciklama),
-                    ),
-            )
-            .child(
-                Button::new(format!("merkez-arac-{sira}"))
-                    .label(format!("Aç · {}", kayit.ad))
-                    .on_click(cx.listener(move |this, _, window, cx| {
-                        match hedef {
-                            AracHedef::Sayfa(sayfa) => {
-                                this.sayfa = sayfa;
-                                this.merkez_araci = None;
-                            }
-                            AracHedef::Panel(arac) => {
-                                this.merkez_araci = Some(arac);
-                                this.sayfa = Sayfa::AracMerkezi;
-                                this.merkez_mesaj = None;
-                                this.merkez_hata = None;
-                                this.merkez_onay = None;
-                                if matches!(
-                                    arac,
-                                    MerkezAraci::DosyaKayitBulucu
-                                        | MerkezAraci::ZorlaKaldir
-                                        | MerkezAraci::WindowsGuncelleme
-                                        | MerkezAraci::TarayiciUzantilari
-                                        | MerkezAraci::BaglantiYoneticisi
-                                ) {
-                                    this.merkez_sorgu = None;
-                                    this.merkez_sorgu_abonelik = None;
-                                    this.merkez_sorgu_olustur(window, cx);
-                                }
-                            }
-                        }
-                        cx.notify();
-                    })),
-            )
-            .into_any_element()
-    }
-
-    fn arac_merkezi_detayi(
-        &mut self,
-        arac: MerkezAraci,
-        window: &mut Window,
-        cx: &mut Context<Self>,
-    ) -> AnyElement {
-        let (ad, aciklama) = match arac {
-            MerkezAraci::ZorlaKaldir => (
-                "Zorla kaldır",
-                "Kaldırma komutu çalışmayan uygulamaların klasörünü karantinaya alır ve kayıt anahtarını yedekleyerek siler.",
-            ),
-            MerkezAraci::KurulumIzleme => (
-                "Kurulum İzleme",
-                "Kurulum öncesi ve sonrası dosya/kayıt anlık görüntüsünü karşılaştırarak değişiklikleri raporlar.",
-            ),
-            MerkezAraci::WindowsGuncelleme => (
-                "Windows Güncelleme Yöneticisi",
-                "Kurulu Windows güncellemelerini listeler ve kaldırılabilir olanları kaldırır.",
-            ),
-            MerkezAraci::TarayiciUzantilari => (
-                "Tarayıcı Uzantısı Yöneticisi",
-                "Chrome, Edge, Brave, Vivaldi, Yandex, Opera ve Firefox uzantılarını listeler ve karantinaya alır.",
-            ),
-            MerkezAraci::DosyaKayitBulucu => (
-                "Dosya ve Kayıt Bulucu",
-                "Dosya adlarında ve kayıt defterinde joker destekli arama yapar.",
-            ),
-            MerkezAraci::DiskAnalisti => (
-                "Disk Analisti",
-                "Klasör ve dosya boyutlarını en büyükten küçüğe analiz eder.",
-            ),
-            MerkezAraci::BaglantiYoneticisi => (
-                "Bağlantı Yöneticisi",
-                "Etkin TCP/UDP bağlantılarını süreç bilgisiyle listeler.",
-            ),
-        };
-        let icerik = match arac {
-            MerkezAraci::WindowsGuncelleme => self.merkez_guncelleme_paneli(cx),
-            MerkezAraci::TarayiciUzantilari => self.merkez_uzanti_paneli(cx),
-            MerkezAraci::DosyaKayitBulucu => self.merkez_bulucu_paneli(window, cx),
-            MerkezAraci::DiskAnalisti => self.merkez_disk_paneli(cx),
-            MerkezAraci::BaglantiYoneticisi => self.merkez_baglanti_paneli(cx),
-            MerkezAraci::ZorlaKaldir => self.merkez_zorla_paneli(cx),
-            MerkezAraci::KurulumIzleme => self.merkez_izleme_paneli(cx),
-        };
+    pub(super) fn arac_panosu(&self, icerik: AnyElement, cx: &mut Context<Self>) -> AnyElement {
         v_flex()
             .gap_4()
-            .child(
-                h_flex()
-                    .gap_3()
-                    .items_center()
-                    .child(
-                        Button::new("merkez-arac-geri")
-                            .label("Geri")
-                            .on_click(cx.listener(|this, _, _, cx| {
-                                this.merkez_araci = None;
-                                this.merkez_onay = None;
-                                this.merkez_mesaj = None;
-                                this.merkez_hata = None;
-                                cx.notify();
-                            })),
-                    )
-                    .child(div().text_lg().font_weight(FontWeight::SEMIBOLD).child(ad)),
-            )
-            .child(
-                div()
-                    .text_sm()
-                    .text_color(cx.theme().muted_foreground)
-                    .child(aciklama),
-            )
             .child(self.merkez_onay_paneli(cx))
             .child(self.merkez_durum_kutulari(cx))
             .child(icerik)
@@ -617,7 +313,7 @@ impl WinNexusApp {
         );
     }
 
-    fn merkez_sorgu_olustur(&mut self, window: &mut Window, cx: &mut Context<Self>) {
+    pub(super) fn merkez_sorgu_olustur(&mut self, window: &mut Window, cx: &mut Context<Self>) {
         if self.merkez_sorgu.is_some() {
             return;
         }
@@ -633,7 +329,7 @@ impl WinNexusApp {
         self.merkez_sorgu_abonelik = Some(abonelik);
     }
 
-    fn merkez_guncelleme_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_guncelleme_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let filtre = self.merkez_sorgu_metni(cx).trim().to_lowercase();
         let toplam = self.guncellemeler.len();
         let guncellemeler = self
@@ -718,7 +414,7 @@ impl WinNexusApp {
         )
     }
 
-    fn merkez_uzanti_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_uzanti_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let filtre = self.merkez_sorgu_metni(cx).trim().to_lowercase();
         let toplam = self.tarayici_uzantilari.len();
         let uzantilar = self
@@ -793,7 +489,11 @@ impl WinNexusApp {
         )
     }
 
-    fn merkez_bulucu_paneli(&mut self, _window: &mut Window, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_bulucu_paneli(
+        &mut self,
+        _window: &mut Window,
+        cx: &mut Context<Self>,
+    ) -> AnyElement {
         let Some(girdi) = self.merkez_sorgu.clone() else {
             return self.bolum_karti(
                 "Dosya ve Kayıt Bulucu".to_string(),
@@ -974,7 +674,7 @@ impl WinNexusApp {
         )
     }
 
-    fn merkez_disk_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_disk_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let kok = self.merkez_kok.clone();
         let analiz = self.disk_analizi.clone();
         let islemde = self.merkez_islemde;
@@ -1077,7 +777,7 @@ impl WinNexusApp {
         )
     }
 
-    fn merkez_baglanti_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_baglanti_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let filtre = self.merkez_sorgu_metni(cx).trim().to_lowercase();
         let toplam = self.baglantilar.len();
         let baglantilar = self
@@ -1194,7 +894,7 @@ impl WinNexusApp {
         )
     }
 
-    fn merkez_zorla_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_zorla_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let filtre = self.merkez_sorgu_metni(cx).trim().to_lowercase();
         let toplam = self.zorla_uygulamalar.len();
         let uygulamalar = self
@@ -1375,7 +1075,7 @@ impl WinNexusApp {
         );
     }
 
-    fn merkez_izleme_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
+    pub(super) fn merkez_izleme_paneli(&self, cx: &mut Context<Self>) -> AnyElement {
         let oturum = self.izleme_oturumu.clone();
         let rapor = self.izleme_raporu.clone();
         let islemde = self.merkez_islemde;

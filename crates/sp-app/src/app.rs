@@ -64,6 +64,9 @@ mod android;
 mod arac_merkezi;
 mod tarama;
 
+#[cfg(test)]
+mod testleri;
+
 const YASAL_UYARI: &str = include_str!("../../../docs/yasal-uyari.txt");
 
 const DOKUNMA_HEDEFI_PX: f32 = 44.;
@@ -74,18 +77,24 @@ const BASLIK_CUBUGU_YUKSEKLIGI_PX: f32 = 52.;
 enum Sayfa {
     GenelBakis,
     Donanim,
+    Gecmis,
     InceAyarlar,
     SistemYonetimi,
+    BaglantiYoneticisi,
     Temizlik,
+    DiskAnalisti,
     Bakim,
+    WindowsGuncelleme,
     SorunGiderme,
     Kaldirici,
     Winget,
-    Android,
-    AracMerkezi,
+    ZorlaKaldir,
+    KurulumIzleme,
+    TarayiciUzantilari,
     Araclar,
+    DosyaKayitBulucu,
     GodMode,
-    Gecmis,
+    Android,
     Ayarlar,
 }
 
@@ -93,27 +102,33 @@ enum Sayfa {
 enum Bolum {
     Panel,
     Sistem,
+    Temizlik,
     Bakim,
     Uygulamalar,
     Araclar,
+    Android,
 }
 
 impl Bolum {
-    const HEPSI: [Bolum; 5] = [
+    const HEPSI: [Bolum; 7] = [
         Bolum::Panel,
         Bolum::Sistem,
+        Bolum::Temizlik,
         Bolum::Bakim,
         Bolum::Uygulamalar,
         Bolum::Araclar,
+        Bolum::Android,
     ];
 
     fn baslik(self) -> &'static str {
         match self {
             Self::Panel => "Panel",
             Self::Sistem => "Sistem",
+            Self::Temizlik => "Temizlik",
             Self::Bakim => "Bakım",
             Self::Uygulamalar => "Uygulamalar",
             Self::Araclar => "Araçlar",
+            Self::Android => "Android",
         }
     }
 
@@ -121,9 +136,11 @@ impl Bolum {
         match self {
             Self::Panel => "panel",
             Self::Sistem => "sistem",
+            Self::Temizlik => "temizlik",
             Self::Bakim => "bakim",
             Self::Uygulamalar => "uygulamalar",
             Self::Araclar => "araclar",
+            Self::Android => "android",
         }
     }
 
@@ -131,32 +148,35 @@ impl Bolum {
         match self {
             Self::Panel => IconName::LayoutDashboard,
             Self::Sistem => IconName::Settings2,
+            Self::Temizlik => IconName::RefreshCw,
             Self::Bakim => IconName::Heart,
             Self::Uygulamalar => IconName::Inbox,
             Self::Araclar => IconName::Palette,
+            Self::Android => IconName::Bot,
         }
     }
 
     fn sayfalar(self) -> &'static [Sayfa] {
         match self {
-            Self::Panel => &[Sayfa::GenelBakis, Sayfa::Gecmis],
-            Self::Sistem => &[Sayfa::InceAyarlar, Sayfa::SistemYonetimi, Sayfa::Donanim],
-            Self::Bakim => &[Sayfa::Temizlik, Sayfa::Bakim, Sayfa::SorunGiderme],
-            Self::Uygulamalar => &[Sayfa::Kaldirici, Sayfa::Winget, Sayfa::Android],
-            Self::Araclar => &[Sayfa::AracMerkezi, Sayfa::Araclar, Sayfa::GodMode],
+            Self::Panel => &[Sayfa::GenelBakis, Sayfa::Donanim, Sayfa::Gecmis],
+            Self::Sistem => &[
+                Sayfa::InceAyarlar,
+                Sayfa::SistemYonetimi,
+                Sayfa::BaglantiYoneticisi,
+            ],
+            Self::Temizlik => &[Sayfa::Temizlik, Sayfa::DiskAnalisti],
+            Self::Bakim => &[Sayfa::Bakim, Sayfa::WindowsGuncelleme, Sayfa::SorunGiderme],
+            Self::Uygulamalar => &[
+                Sayfa::Kaldirici,
+                Sayfa::Winget,
+                Sayfa::ZorlaKaldir,
+                Sayfa::KurulumIzleme,
+                Sayfa::TarayiciUzantilari,
+            ],
+            Self::Araclar => &[Sayfa::Araclar, Sayfa::DosyaKayitBulucu, Sayfa::GodMode],
+            Self::Android => &[Sayfa::Android],
         }
     }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum MerkezAraci {
-    ZorlaKaldir,
-    KurulumIzleme,
-    WindowsGuncelleme,
-    TarayiciUzantilari,
-    DosyaKayitBulucu,
-    DiskAnalisti,
-    BaglantiYoneticisi,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -314,21 +334,27 @@ enum AndroidOnay {
 }
 
 impl Sayfa {
-    const HEPSI: [Sayfa; 15] = [
+    const HEPSI: [Sayfa; 21] = [
         Sayfa::GenelBakis,
+        Sayfa::Donanim,
         Sayfa::Gecmis,
         Sayfa::InceAyarlar,
         Sayfa::SistemYonetimi,
-        Sayfa::Donanim,
+        Sayfa::BaglantiYoneticisi,
         Sayfa::Temizlik,
+        Sayfa::DiskAnalisti,
         Sayfa::Bakim,
+        Sayfa::WindowsGuncelleme,
         Sayfa::SorunGiderme,
         Sayfa::Kaldirici,
         Sayfa::Winget,
-        Sayfa::Android,
-        Sayfa::AracMerkezi,
+        Sayfa::ZorlaKaldir,
+        Sayfa::KurulumIzleme,
+        Sayfa::TarayiciUzantilari,
         Sayfa::Araclar,
+        Sayfa::DosyaKayitBulucu,
         Sayfa::GodMode,
+        Sayfa::Android,
         Sayfa::Ayarlar,
     ];
 
@@ -336,18 +362,24 @@ impl Sayfa {
         match self {
             Self::GenelBakis => "Genel Bakış",
             Self::Donanim => "Donanım",
+            Self::Gecmis => "Geçmiş",
             Self::InceAyarlar => "İnce Ayarlar",
             Self::SistemYonetimi => "Sistem Yönetimi",
+            Self::BaglantiYoneticisi => "Bağlantı Yöneticisi",
             Self::Temizlik => "Temizlik",
+            Self::DiskAnalisti => "Disk Analisti",
             Self::Bakim => "Bakım",
+            Self::WindowsGuncelleme => "Windows Güncelleme Yöneticisi",
             Self::SorunGiderme => "Sorun Giderme",
             Self::Kaldirici => "Kaldırıcı",
             Self::Winget => "Winget Merkezi",
-            Self::Android => "Android Yönetimi",
-            Self::AracMerkezi => "Araç Merkezi",
+            Self::ZorlaKaldir => "Zorla Kaldır",
+            Self::KurulumIzleme => "Kurulum İzleme",
+            Self::TarayiciUzantilari => "Tarayıcı Uzantıları",
             Self::Araclar => "Araç Kutusu",
+            Self::DosyaKayitBulucu => "Dosya ve Kayıt Bulucu",
             Self::GodMode => "God Mode",
-            Self::Gecmis => "Geçmiş",
+            Self::Android => "Android Yönetimi",
             Self::Ayarlar => "Ayarlar",
         }
     }
@@ -356,37 +388,53 @@ impl Sayfa {
         match self {
             Self::GenelBakis => "genel-bakis",
             Self::Donanim => "donanim",
+            Self::Gecmis => "gecmis",
             Self::InceAyarlar => "ince-ayarlar",
             Self::SistemYonetimi => "sistem-yonetimi",
+            Self::BaglantiYoneticisi => "baglanti-yoneticisi",
             Self::Temizlik => "temizlik",
+            Self::DiskAnalisti => "disk-analisti",
             Self::Bakim => "bakim",
+            Self::WindowsGuncelleme => "windows-guncelleme",
             Self::SorunGiderme => "sorun-giderme",
             Self::Kaldirici => "kaldirici",
             Self::Winget => "winget",
-            Self::Android => "android",
-            Self::AracMerkezi => "arac-merkezi",
+            Self::ZorlaKaldir => "zorla-kaldir",
+            Self::KurulumIzleme => "kurulum-izleme",
+            Self::TarayiciUzantilari => "tarayici-uzantilari",
             Self::Araclar => "araclar",
+            Self::DosyaKayitBulucu => "dosya-kayit-bulucu",
             Self::GodMode => "god-mode",
-            Self::Gecmis => "gecmis",
+            Self::Android => "android",
             Self::Ayarlar => "ayarlar",
         }
     }
 
     fn aciklama(self) -> &'static str {
         match self {
-            Self::GenelBakis => "Sistem durumu, ince ayar özeti ve tüm modüllerin giriş noktası.",
+            Self::GenelBakis => "Sistem durumu, donanım özeti ve tüm modüllerin giriş noktası.",
             Self::Donanim => "İşlemci, ekran kartı, bellek, disk sağlığı ve ağ profilleri.",
+            Self::Gecmis => "Uygulanan işlemlerin günlük kayıtları ve sonuçları.",
             Self::InceAyarlar => {
                 "Gizlilik, Explorer, telemetri ve görev çubuğu için yerleşik ince ayarlar."
             }
             Self::SistemYonetimi => {
                 "Başlangıç öğeleri, servisler, zamanlanmış görevler ve süreçler."
             }
+            Self::BaglantiYoneticisi => {
+                "Etkin TCP/UDP bağlantılarını süreç bilgisiyle listeler."
+            }
             Self::Temizlik => {
                 "Geçici dosyalar, tarayıcı önbellekleri, boş klasörler ve yinelenen dosyalar."
             }
+            Self::DiskAnalisti => {
+                "Klasör ve dosya boyutlarını en büyükten küçüğe analiz eder."
+            }
             Self::Bakim => {
                 "DISM, SFC, Appx onarımı, sürücü dışa aktarma ve geri yükleme noktaları."
+            }
+            Self::WindowsGuncelleme => {
+                "Kurulu Windows güncellemelerini listeler ve kaldırılabilir olanları kaldırır."
             }
             Self::SorunGiderme => {
                 "npm yolu, PowerShell ilkesi ve bellek sıkıştırma ayarlarının denetimi."
@@ -394,25 +442,45 @@ impl Sayfa {
             Self::Kaldirici => {
                 "Kurulu masaüstü uygulamalarını kaldırın, artıkları karantinaya alın."
             }
-            Self::Winget => "Paket araması, güncellemeler, kaynaklar, listeler ve hazır profiller.",
-            Self::Android => "ADB cihazları, sürücü kurulumu ve UAD-ng ile paket yönetimi.",
-            Self::AracMerkezi => {
-                "Kaldırma, temizlik, arama ve sistem araçlarının tamamı tek merkezde."
+            Self::Winget => {
+                "Paket araması, güncellemeler, kaynaklar, listeler ve hazır profiller."
+            }
+            Self::ZorlaKaldir => {
+                "Kaldırma komutu çalışmayan uygulamaların klasörünü karantinaya alır ve kayıt anahtarını yedekleyerek siler."
+            }
+            Self::KurulumIzleme => {
+                "Kurulum öncesi ve sonrası dosya/kayıt anlık görüntüsünü karşılaştırarak değişiklikleri raporlar."
+            }
+            Self::TarayiciUzantilari => {
+                "Chrome, Edge, Brave, Vivaldi, Yandex, Opera ve Firefox uzantılarını listeler ve karantinaya alır."
             }
             Self::Araclar => "Explorer, BIOS, sahiplik menüsü ve klasör kısayolları.",
-            Self::GodMode => "Windows denetim masası görevlerinin tamamını tek pencerede açın.",
-            Self::Gecmis => "Uygulanan işlemlerin günlük kayıtları ve sonuçları.",
+            Self::DosyaKayitBulucu => {
+                "Dosya adlarında ve kayıt defterinde joker destekli arama yapar."
+            }
+            Self::GodMode => {
+                "Windows denetim masası görevlerinin tamamını tek pencerede açın."
+            }
+            Self::Android => "ADB cihazları, sürücü kurulumu ve UAD-ng ile paket yönetimi.",
             Self::Ayarlar => "Sistem taraması, tercihler, veri dizini ve sürüm bilgisi.",
         }
     }
 
     fn bolum(self) -> Option<Bolum> {
         match self {
-            Self::GenelBakis | Self::Gecmis => Some(Bolum::Panel),
-            Self::InceAyarlar | Self::SistemYonetimi | Self::Donanim => Some(Bolum::Sistem),
-            Self::Temizlik | Self::Bakim | Self::SorunGiderme => Some(Bolum::Bakim),
-            Self::Kaldirici | Self::Winget | Self::Android => Some(Bolum::Uygulamalar),
-            Self::AracMerkezi | Self::Araclar | Self::GodMode => Some(Bolum::Araclar),
+            Self::GenelBakis | Self::Donanim | Self::Gecmis => Some(Bolum::Panel),
+            Self::InceAyarlar | Self::SistemYonetimi | Self::BaglantiYoneticisi => {
+                Some(Bolum::Sistem)
+            }
+            Self::Temizlik | Self::DiskAnalisti => Some(Bolum::Temizlik),
+            Self::Bakim | Self::WindowsGuncelleme | Self::SorunGiderme => Some(Bolum::Bakim),
+            Self::Kaldirici
+            | Self::Winget
+            | Self::ZorlaKaldir
+            | Self::KurulumIzleme
+            | Self::TarayiciUzantilari => Some(Bolum::Uygulamalar),
+            Self::Araclar | Self::DosyaKayitBulucu | Self::GodMode => Some(Bolum::Araclar),
+            Self::Android => Some(Bolum::Android),
             Self::Ayarlar => None,
         }
     }
@@ -421,20 +489,37 @@ impl Sayfa {
         match self {
             Self::GenelBakis => IconName::LayoutDashboard,
             Self::Donanim => IconName::Cpu,
+            Self::Gecmis => IconName::Undo2,
             Self::InceAyarlar => IconName::Settings2,
             Self::SistemYonetimi => IconName::SquareTerminal,
+            Self::BaglantiYoneticisi => IconName::Network,
             Self::Temizlik => IconName::RefreshCw,
+            Self::DiskAnalisti => IconName::HardDrive,
             Self::Bakim => IconName::Heart,
+            Self::WindowsGuncelleme => IconName::RotateCw,
             Self::SorunGiderme => IconName::CircleAlert,
             Self::Kaldirici => IconName::Delete,
             Self::Winget => IconName::Inbox,
-            Self::Android => IconName::Globe,
-            Self::AracMerkezi => IconName::Inspector,
+            Self::ZorlaKaldir => IconName::Ban,
+            Self::KurulumIzleme => IconName::Inspector,
+            Self::TarayiciUzantilari => IconName::Globe,
             Self::Araclar => IconName::Palette,
+            Self::DosyaKayitBulucu => IconName::Search,
             Self::GodMode => IconName::Frame,
-            Self::Gecmis => IconName::Undo2,
+            Self::Android => IconName::Bot,
             Self::Ayarlar => IconName::Settings,
         }
+    }
+
+    fn arac_aramasi_gerekli(self) -> bool {
+        matches!(
+            self,
+            Self::WindowsGuncelleme
+                | Self::TarayiciUzantilari
+                | Self::DosyaKayitBulucu
+                | Self::ZorlaKaldir
+                | Self::BaglantiYoneticisi
+        )
     }
 }
 
@@ -501,9 +586,12 @@ fn kural_kategorisi(kural: &Kural) -> KuralKategorisi {
     KuralKategorisi::Sistem
 }
 
+fn surum_etiketi() -> String {
+    format!("beta v{SURUM}")
+}
+
 pub struct WinNexusApp {
     sayfa: Sayfa,
-    merkez_araci: Option<MerkezAraci>,
     merkez_sorgu: Option<Entity<InputState>>,
     merkez_sorgu_abonelik: Option<Subscription>,
     merkez_kok: Option<PathBuf>,
@@ -759,7 +847,6 @@ impl WinNexusApp {
 
         Self {
             sayfa: Sayfa::GenelBakis,
-            merkez_araci: None,
             merkez_sorgu: None,
             merkez_sorgu_abonelik: None,
             merkez_kok: None,
@@ -9368,6 +9455,14 @@ impl WinNexusApp {
         if sayfa == Sayfa::Android {
             self.android_arama_olustur(window, cx);
         }
+        if sayfa.arac_aramasi_gerekli() {
+            self.merkez_onay = None;
+            self.merkez_mesaj = None;
+            self.merkez_hata = None;
+            self.merkez_sorgu = None;
+            self.merkez_sorgu_abonelik = None;
+            self.merkez_sorgu_olustur(window, cx);
+        }
         cx.notify();
     }
 
@@ -9831,7 +9926,7 @@ impl WinNexusApp {
                         },
                         cx,
                     ))
-                    .child(Self::durum_alani("Sürüm", format!("v{SURUM}"), cx)),
+                    .child(Self::durum_alani("Sürüm", surum_etiketi(), cx)),
             )
             .child(
                 div()
@@ -10445,7 +10540,7 @@ impl WinNexusApp {
                             div()
                                 .text_sm()
                                 .text_color(cx.theme().muted_foreground)
-                                .child(format!("Sürüm: v{SURUM}")),
+                                .child(format!("Sürüm: {}", surum_etiketi())),
                         )
                         .into_any_element(),
                     cx,
@@ -10510,19 +10605,28 @@ impl WinNexusApp {
         }
         let sayfa = match self.sayfa {
             Sayfa::GenelBakis => self.genel_bakis(cx),
-            Sayfa::InceAyarlar => self.ince_ayarlar(cx),
-            Sayfa::Kaldirici => self.kaldirici_sayfasi(window, cx),
-            Sayfa::SistemYonetimi => self.sistem_yonetimi_sayfasi(cx),
-            Sayfa::Temizlik => self.temizlik_sayfasi(cx),
-            Sayfa::Bakim => self.bakim_sayfasi(cx),
             Sayfa::Donanim => self.donanim_sayfasi(cx),
-            Sayfa::Winget => self.winget_sayfasi(window, cx),
-            Sayfa::AracMerkezi => self.arac_merkezi_sayfasi(window, cx),
-            Sayfa::Android => self.android_sayfasi(window, cx),
-            Sayfa::Araclar => self.arac_kutusu(cx),
-            Sayfa::GodMode => self.god_mode_sayfasi(cx),
-            Sayfa::SorunGiderme => self.sorun_sayfasi(cx),
             Sayfa::Gecmis => self.gecmis(cx),
+            Sayfa::InceAyarlar => self.ince_ayarlar(cx),
+            Sayfa::SistemYonetimi => self.sistem_yonetimi_sayfasi(cx),
+            Sayfa::BaglantiYoneticisi => self.arac_panosu(self.merkez_baglanti_paneli(cx), cx),
+            Sayfa::Temizlik => self.temizlik_sayfasi(cx),
+            Sayfa::DiskAnalisti => self.arac_panosu(self.merkez_disk_paneli(cx), cx),
+            Sayfa::Bakim => self.bakim_sayfasi(cx),
+            Sayfa::WindowsGuncelleme => self.arac_panosu(self.merkez_guncelleme_paneli(cx), cx),
+            Sayfa::SorunGiderme => self.sorun_sayfasi(cx),
+            Sayfa::Kaldirici => self.kaldirici_sayfasi(window, cx),
+            Sayfa::Winget => self.winget_sayfasi(window, cx),
+            Sayfa::ZorlaKaldir => self.arac_panosu(self.merkez_zorla_paneli(cx), cx),
+            Sayfa::KurulumIzleme => self.arac_panosu(self.merkez_izleme_paneli(cx), cx),
+            Sayfa::TarayiciUzantilari => self.arac_panosu(self.merkez_uzanti_paneli(cx), cx),
+            Sayfa::Araclar => self.arac_kutusu(cx),
+            Sayfa::DosyaKayitBulucu => {
+                let panel = self.merkez_bulucu_paneli(window, cx);
+                self.arac_panosu(panel, cx)
+            }
+            Sayfa::GodMode => self.god_mode_sayfasi(cx),
+            Sayfa::Android => self.android_sayfasi(window, cx),
             Sayfa::Ayarlar => self.ayarlar_sayfasi(cx),
         };
         icerik.child(sayfa).into_any_element()
