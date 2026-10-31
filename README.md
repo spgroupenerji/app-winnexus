@@ -47,6 +47,7 @@ Kurulum gerektirmeyen portatif Windows uygulaması her sürümde GitHub Releases
 - **En güncel sürüm:** https://github.com/spgroupenerji/app-winnexus/releases/latest
 - **Doğrudan indirme:** https://github.com/spgroupenerji/app-winnexus/releases/latest/download/WinNexus_beta.exe
 - **SHA-256:** https://github.com/spgroupenerji/app-winnexus/releases/latest/download/WinNexus_beta.exe.sha256
+- **Kaynak arşivi:** Her sürüm sayfasındaki `Source code (zip)` indirmesi projenin o sürümdeki tam kaynağıdır; kopyalayıp doğrudan geliştirmeye başlanabilir.
 
 İndirdikten sonra bütünlüğü doğrulayın:
 
@@ -167,7 +168,7 @@ Bu kapılar GitHub Actions CI (`.github/workflows/ci.yml`) üzerinde her push ve
 | `assets/` | Uygulama ikonu ve README ekran görüntüleri |
 | `.github/` | CI ve release iş akışları |
 | `docs/` | Teknik kanıt notları, yasal uyarı, uygulama öncesi araç arşivi ve denetim raporları |
-| `release/` | Dağıtım klasörü (ikili dosyalar izlenmez) |
+| `release/` | Yerel dağıtım çıktısı: yalnız en güncel derlenmiş sürüm (ikili dosyalar izlenmez) |
 
 ## Yasal Uyarı ve Sorumluluk Reddi
 
