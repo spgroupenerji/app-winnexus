@@ -132,13 +132,18 @@ fn metne_cevir(baytlar: &[u8]) -> String {
 }
 
 fn oem_metne_cevir(baytlar: &[u8]) -> Option<String> {
-    use windows_sys::Win32::Globalization::{MultiByteToWideChar, CP_OEMCP};
+    use windows_sys::Win32::Globalization::CP_OEMCP;
+    metne_cevir_kod_sayfasi(baytlar, CP_OEMCP)
+}
+
+fn metne_cevir_kod_sayfasi(baytlar: &[u8], kod_sayfasi: u32) -> Option<String> {
+    use windows_sys::Win32::Globalization::MultiByteToWideChar;
     if baytlar.is_empty() {
         return Some(String::new());
     }
     let uzunluk = unsafe {
         MultiByteToWideChar(
-            CP_OEMCP,
+            kod_sayfasi,
             0,
             baytlar.as_ptr(),
             baytlar.len() as i32,
@@ -152,7 +157,7 @@ fn oem_metne_cevir(baytlar: &[u8]) -> Option<String> {
     let mut tampon = vec![0u16; uzunluk as usize];
     let yazilan = unsafe {
         MultiByteToWideChar(
-            CP_OEMCP,
+            kod_sayfasi,
             0,
             baytlar.as_ptr(),
             baytlar.len() as i32,
@@ -681,6 +686,8 @@ impl WingetServisi {
 mod testler {
     use super::*;
 
+    const TURKCE_OEM_KOD_SAYFASI: u32 = 857;
+
     #[test]
     fn oem_turkce_cikti_cozulur() {
         let baytlar = [
@@ -689,8 +696,8 @@ mod testler {
             0x20, 0x67, 0x65, 0x72, 0x65, 0x6B, 0x69, 0x79, 0x6F, 0x72, 0x2E,
         ];
         assert_eq!(
-            metne_cevir(&baytlar),
-            "İstenen işlem için yükseltme gerekiyor."
+            metne_cevir_kod_sayfasi(&baytlar, TURKCE_OEM_KOD_SAYFASI),
+            Some("İstenen işlem için yükseltme gerekiyor.".to_string())
         );
     }
 
