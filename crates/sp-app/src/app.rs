@@ -10044,6 +10044,7 @@ impl WinNexusApp {
                 h_flex()
                     .gap_2()
                     .items_center()
+                    .min_w_0()
                     .child(
                         Icon::new(sayfa.ikon())
                             .with_size(gpui_kit::component::Size::Medium)
@@ -10051,6 +10052,8 @@ impl WinNexusApp {
                     )
                     .child(
                         div()
+                            .flex_1()
+                            .min_w_0()
                             .font_weight(FontWeight::SEMIBOLD)
                             .child(sayfa.baslik()),
                     ),
@@ -10743,6 +10746,7 @@ impl Render for WinNexusApp {
                 .flex_1()
                 .min_h_0()
                 .w_full()
+                .items_stretch()
                 .child(self.yan_menu(bolum, cx))
                 .child(sag)
                 .into_any_element()
