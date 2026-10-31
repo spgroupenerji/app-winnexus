@@ -36,6 +36,9 @@ fn bolum_kapsami_tam() {
         );
     }
     assert_eq!(gorulen.len(), Sayfa::HEPSI.len() - 1);
+    assert_eq!(Sayfa::HEPSI.len(), 21);
+    assert_eq!(Bolum::HEPSI.len(), 7);
+    assert_eq!(Sayfa::Ayarlar.bolum(), None);
 }
 
 #[test]
@@ -60,7 +63,10 @@ fn sayfa_kimlikleri_benzersiz_ve_ascii() {
 
 #[test]
 fn surum_beta_etiketi() {
-    assert!(surum_etiketi().starts_with("beta v"));
+    let etiket = surum_etiketi();
+    assert!(etiket.starts_with("beta v"));
+    let govde = etiket.strip_prefix("beta v").expect("beta v öneki");
+    assert!(!govde.trim().is_empty());
 }
 
 #[test]

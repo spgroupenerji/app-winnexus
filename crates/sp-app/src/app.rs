@@ -9451,14 +9451,17 @@ impl WinNexusApp {
     }
 
     fn sayfaya_git(&mut self, sayfa: Sayfa, window: &mut Window, cx: &mut Context<Self>) {
+        if self.sayfa == sayfa {
+            return;
+        }
         self.sayfa = sayfa;
+        self.merkez_onay = None;
+        self.merkez_mesaj = None;
+        self.merkez_hata = None;
         if sayfa == Sayfa::Android {
             self.android_arama_olustur(window, cx);
         }
         if sayfa.arac_aramasi_gerekli() {
-            self.merkez_onay = None;
-            self.merkez_mesaj = None;
-            self.merkez_hata = None;
             self.merkez_sorgu = None;
             self.merkez_sorgu_abonelik = None;
             self.merkez_sorgu_olustur(window, cx);
