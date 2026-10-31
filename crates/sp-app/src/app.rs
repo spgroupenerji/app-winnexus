@@ -62,6 +62,7 @@ use std::time::Duration;
 
 mod android;
 mod arac_merkezi;
+mod gezinme;
 mod tarama;
 
 #[cfg(test)]
@@ -9496,22 +9497,6 @@ impl WinNexusApp {
             .into_any_element()
     }
 
-    fn segment_butonu(&self, sayfa: Sayfa, cx: &mut Context<Self>) -> AnyElement {
-        let buton = Button::new(format!("segment-{}", sayfa.kimlik()))
-            .icon(sayfa.ikon())
-            .label(sayfa.baslik())
-            .with_size(gpui_kit::component::Size::Small)
-            .px_3();
-        let buton = if self.sayfa == sayfa {
-            buton.primary()
-        } else {
-            buton.ghost()
-        };
-        Self::dokunma_hedefi(buton)
-            .on_click(cx.listener(move |this, _, window, cx| this.sayfaya_git(sayfa, window, cx)))
-            .into_any_element()
-    }
-
     fn tema_dugmesi(
         &self,
         tema: Tema,
@@ -9610,7 +9595,7 @@ impl WinNexusApp {
     }
 
     fn baslik_cubugu(&self, cx: &mut Context<Self>) -> impl IntoElement {
-        let mut satir = h_flex()
+        let satir = h_flex()
             .h(px(BASLIK_CUBUGU_YUKSEKLIGI_PX))
             .px_4()
             .gap_3()
@@ -9644,17 +9629,6 @@ impl WinNexusApp {
                             .child(self.sayfa.aciklama()),
                     ),
             );
-        if let Some(bolum) = self.sayfa.bolum() {
-            let sayfalar = bolum.sayfalar();
-            if sayfalar.len() > 1 {
-                satir = satir.child(
-                    h_flex()
-                        .gap_1()
-                        .items_center()
-                        .children(sayfalar.iter().map(|sayfa| self.segment_butonu(*sayfa, cx))),
-                );
-            }
-        }
         satir
     }
 
@@ -10644,20 +10618,37 @@ impl Render for WinNexusApp {
         }
         let arka = cx.theme().background;
         let on = cx.theme().foreground;
+        let icerik = self.icerik(window, cx);
+        let baslik = self.baslik_cubugu(cx);
+        let govde = v_flex()
+            .flex_1()
+            .min_h_0()
+            .overflow_y_scrollbar()
+            .p_4()
+            .child(v_flex().w_full().gap_4().child(icerik));
+        let sag = v_flex()
+            .flex_1()
+            .min_w_0()
+            .min_h_0()
+            .child(baslik)
+            .child(govde);
+        let alan = if let Some(bolum) = self.sayfa.bolum() {
+            h_flex()
+                .flex_1()
+                .min_h_0()
+                .w_full()
+                .child(self.yan_menu(bolum, cx))
+                .child(sag)
+                .into_any_element()
+        } else {
+            sag.into_any_element()
+        };
         v_flex()
             .size_full()
             .bg(arka)
             .text_color(on)
             .child(self.ust_gezinme(cx))
-            .child(self.baslik_cubugu(cx))
-            .child(
-                v_flex()
-                    .flex_1()
-                    .min_h_0()
-                    .overflow_y_scrollbar()
-                    .p_4()
-                    .child(v_flex().w_full().gap_4().child(self.icerik(window, cx))),
-            )
+            .child(alan)
             .into_any_element()
     }
 }
