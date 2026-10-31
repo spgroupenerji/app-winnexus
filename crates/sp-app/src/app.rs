@@ -74,6 +74,8 @@ const DOKUNMA_HEDEFI_PX: f32 = 44.;
 const UST_CUBUK_YUKSEKLIGI_PX: f32 = 60.;
 const BASLIK_CUBUGU_YUKSEKLIGI_PX: f32 = 52.;
 const DONANIM_ETIKET_GENISLIGI_PX: f32 = 110.;
+const DETAY_PANELI_GENISLIGI_PX: f32 = 360.;
+const INCE_AYARLAR_LISTE_MIN_GENISLIGI_PX: f32 = 520.;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Sayfa {
@@ -3084,10 +3086,14 @@ impl WinNexusApp {
             .border_color(cx.theme().border)
             .child(
                 h_flex()
+                    .flex_wrap()
                     .justify_between()
                     .items_center()
+                    .gap_2()
                     .child(
                         v_flex()
+                            .flex_1()
+                            .min_w_0()
                             .gap_1()
                             .child(
                                 div()
@@ -3112,14 +3118,18 @@ impl WinNexusApp {
             )
             .child(
                 h_flex()
+                    .flex_wrap()
                     .justify_between()
                     .items_center()
+                    .gap_2()
                     .p_2()
                     .rounded_md()
                     .border_1()
                     .border_color(cx.theme().border)
                     .child(
                         v_flex()
+                            .flex_1()
+                            .min_w_0()
                             .gap_1()
                             .child(div().font_weight(FontWeight::SEMIBOLD).child("Klasik sağ tık menüsü"))
                             .child(
@@ -4368,16 +4378,21 @@ impl WinNexusApp {
                 .border_color(cx.theme().border)
                 .child(
                     h_flex()
+                        .flex_wrap()
                         .justify_between()
                         .items_center()
+                        .gap_2()
                         .child(
                             div()
+                                .flex_1()
+                                .min_w_0()
                                 .text_lg()
                                 .font_weight(FontWeight::SEMIBOLD)
                                 .child(format!("Artıklar: {}", uygulama.ad)),
                         )
                         .child(
                             h_flex()
+                                .flex_wrap()
                                 .gap_2()
                                 .child(
                                     Button::new("artik-yenile")
@@ -6602,16 +6617,21 @@ impl WinNexusApp {
             .gap_2()
             .child(
                 h_flex()
+                    .flex_wrap()
                     .justify_between()
                     .items_center()
+                    .gap_2()
                     .child(
                         div()
+                            .flex_1()
+                            .min_w_0()
                             .text_sm()
                             .text_color(cx.theme().muted_foreground)
                             .child("Yalnızca doğrulanabilir kaldırma kayıtları, uygulama yolları ve paylaşılan DLL kayıtları taranır. Silmeden önce .reg yedeği alınır."),
                     )
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("kayit-temizlik-tara")
@@ -6731,16 +6751,21 @@ impl WinNexusApp {
             .gap_2()
             .child(
                 h_flex()
+                    .flex_wrap()
                     .justify_between()
                     .items_center()
+                    .gap_2()
                     .child(
                         div()
+                            .flex_1()
+                            .min_w_0()
                             .text_sm()
                             .text_color(cx.theme().muted_foreground)
                             .child("Masaüstü, başlat menüsü ve başlangıç klasörlerindeki hedefi bulunmayan .lnk dosyaları."),
                     )
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("kisayol-tara")
@@ -6852,10 +6877,14 @@ impl WinNexusApp {
             .gap_2()
             .child(
                 h_flex()
+                    .flex_wrap()
                     .justify_between()
                     .items_center()
+                    .gap_2()
                     .child(
                         div()
+                            .flex_1()
+                            .min_w_0()
                             .text_sm()
                             .text_color(cx.theme().muted_foreground)
                             .child("Simge önbelleği, hata raporları, güncelleme indirmeleri, Defender geçmişi ve geliştirici önbellekleri."),
@@ -6964,6 +6993,7 @@ impl WinNexusApp {
             .gap_2()
             .child(
                 h_flex()
+                    .flex_wrap()
                     .gap_2()
                     .items_center()
                     .child(
@@ -7048,6 +7078,7 @@ impl WinNexusApp {
             .gap_2()
             .child(
                 h_flex()
+                    .flex_wrap()
                     .gap_2()
                     .items_center()
                     .child(
@@ -7057,6 +7088,8 @@ impl WinNexusApp {
                     )
                     .child(
                         div()
+                            .flex_1()
+                            .min_w_0()
                             .text_xs()
                             .text_color(cx.theme().muted_foreground)
                             .child(
@@ -7089,6 +7122,7 @@ impl WinNexusApp {
 
         let mut yinelenen_icerik = v_flex().gap_2().child(
             h_flex()
+                .flex_wrap()
                 .gap_2()
                 .items_center()
                 .child(
@@ -7098,6 +7132,8 @@ impl WinNexusApp {
                 )
                 .child(
                     div()
+                        .flex_1()
+                        .min_w_0()
                         .text_xs()
                         .text_color(cx.theme().muted_foreground)
                         .child(
@@ -7114,7 +7150,7 @@ impl WinNexusApp {
                 .flat_map(|grup| grup.dosyalar.iter().skip(1).cloned())
                 .collect::<Vec<_>>();
             yinelenen_icerik = yinelenen_icerik.child(
-                h_flex().gap_2().items_center().child(
+                h_flex().flex_wrap().gap_2().items_center().child(
                     Button::new("yinelenen-karantina")
                         .danger()
                         .label(format!("{} Kopyayı Karantinaya Taşı", kopyalar.len()))
@@ -8388,6 +8424,7 @@ impl WinNexusApp {
                     )
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("winget-guncelleme-sec")
@@ -8891,6 +8928,7 @@ impl WinNexusApp {
                     .gap_2()
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .items_center()
                             .child(
@@ -9035,6 +9073,7 @@ impl WinNexusApp {
                     )
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("winget-kaynak-listele")
@@ -9177,6 +9216,7 @@ impl WinNexusApp {
                     .child(Textarea::new(&girdi).h(px(120.)).w_full())
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("winget-liste-coz")
@@ -9220,6 +9260,7 @@ impl WinNexusApp {
                             .child(format!("{} paket", paketler.len()))
                             .child(
                                 h_flex()
+                                    .flex_wrap()
                                     .gap_2()
                                     .child(
                                         Button::new("winget-liste-sec")
@@ -9327,6 +9368,7 @@ impl WinNexusApp {
                     )
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("winget-profil-tara")
@@ -9410,6 +9452,7 @@ impl WinNexusApp {
                     .items_center()
                     .child(
                         h_flex()
+                            .flex_wrap()
                             .gap_2()
                             .child(
                                 Button::new("winget-kaynak")
@@ -9900,11 +9943,12 @@ impl WinNexusApp {
         aksiyonlar: Vec<AnyElement>,
         cx: &mut Context<Self>,
     ) -> impl IntoElement {
-        let mut sag = h_flex().gap_2().items_center();
+        let mut sag = h_flex().gap_2().items_center().flex_wrap();
         for aksiyon in aksiyonlar {
             sag = sag.child(aksiyon);
         }
         h_flex()
+            .flex_wrap()
             .justify_between()
             .items_center()
             .p_3()
@@ -9914,6 +9958,7 @@ impl WinNexusApp {
             .border_color(cx.theme().border)
             .child(
                 v_flex()
+                    .flex_1()
                     .gap_1()
                     .min_w_0()
                     .child(div().font_weight(FontWeight::SEMIBOLD).child(baslik))
@@ -10160,7 +10205,10 @@ impl WinNexusApp {
             .values()
             .filter(|durum| **durum == KuralDurumu::Desteklenmiyor)
             .count();
-        let mut gruplar = v_flex().flex_1().min_w_0().gap_6();
+        let mut gruplar = v_flex()
+            .flex_1()
+            .min_w(px(INCE_AYARLAR_LISTE_MIN_GENISLIGI_PX))
+            .gap_6();
         for kategori in KuralKategorisi::HEPSI {
             let bolum_kurallari = kurallar
                 .iter()
@@ -10205,6 +10253,7 @@ impl WinNexusApp {
             )
             .child(
                 h_flex()
+                    .flex_wrap()
                     .gap_6()
                     .items_start()
                     .child(gruplar)
@@ -10221,6 +10270,7 @@ impl WinNexusApp {
             .unwrap_or(KuralDurumu::Bilinmiyor);
         let id = kural.id.clone();
         h_flex()
+            .flex_wrap()
             .justify_between()
             .items_center()
             .p_3()
@@ -10230,6 +10280,7 @@ impl WinNexusApp {
             .border_color(cx.theme().border)
             .child(
                 v_flex()
+                    .flex_1()
                     .gap_1()
                     .min_w_0()
                     .child(
@@ -10246,6 +10297,7 @@ impl WinNexusApp {
             )
             .child(
                 h_flex()
+                    .flex_wrap()
                     .gap_2()
                     .items_center()
                     .child(Self::durum_rozeti(&durum, cx))
@@ -10345,7 +10397,7 @@ impl WinNexusApp {
         };
 
         v_flex()
-            .w(px(360.))
+            .w(px(DETAY_PANELI_GENISLIGI_PX))
             .gap_3()
             .p_4()
             .rounded_lg()
