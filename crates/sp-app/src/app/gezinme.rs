@@ -37,11 +37,11 @@ impl SidebarItem for YanMenuOgesi {
             .items_center()
             .justify_start()
             .child(Icon::new(self.sayfa.ikon()).with_size(gpui_kit::component::Size::Small))
-            .child(div().text_sm().child(self.sayfa.baslik()));
+            .child(div().text_sm().child(self.sayfa.menu_baslik()));
         let buton = Button::new(id)
             .with_size(gpui_kit::component::Size::Small)
             .w_full()
-            .accessibility_label(self.sayfa.baslik())
+            .accessibility_label(self.sayfa.menu_baslik())
             .child(icerik);
         let buton = if self.aktif {
             buton.primary()

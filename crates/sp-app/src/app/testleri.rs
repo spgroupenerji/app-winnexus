@@ -57,6 +57,7 @@ fn sayfa_kimlikleri_benzersiz_ve_ascii() {
             sayfa.kimlik()
         );
         assert!(!sayfa.baslik().trim().is_empty());
+        assert!(!sayfa.menu_baslik().trim().is_empty());
         assert!(!sayfa.aciklama().trim().is_empty());
     }
 }

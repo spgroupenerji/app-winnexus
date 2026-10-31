@@ -388,6 +388,13 @@ impl Sayfa {
         }
     }
 
+    fn menu_baslik(self) -> &'static str {
+        match self {
+            Self::WindowsGuncelleme => "Windows Güncelleme",
+            _ => self.baslik(),
+        }
+    }
+
     fn kimlik(self) -> &'static str {
         match self {
             Self::GenelBakis => "genel-bakis",
