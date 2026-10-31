@@ -2,8 +2,9 @@
 
 Bu klasör yerel dağıtım çıktısı içindir; depoda ikili dosya tutulmaz (`.gitignore`).
 
-- Derleme `scripts/release.ps1` ile yapılır. Sürüm damgası `vYYYYMMDDHHMM` biçiminde derleme anında üretilir ve exe içine gömülür.
-- Klasörde yalnızca en güncel derleme kalır: `WinNexus_beta-vYYYYMMDDHHMM.exe` ve aynı adlı `.sha256` özeti. Yeni artefakt doğrulanmadan önceki dosya silinmez; eski damgalı dosyalar yeni derleme doğrulandıktan sonra temizlenir.
+- Derleme yalnızca `scripts/release.ps1` ile yapılır. `scripts/build.ps1` parametresiz çağrıldığında bu betiğe devreder; uygulama derlemesi için `cargo build` veya başka bir kopya komut kullanılmaz. Sürüm damgası `vYYYYMMDDHHMM` biçiminde derleme anında üretilir ve exe içine gömülür.
+- Betik, yeni artefaktı doğruladıktan sonra `target/release/WinNexus.exe`, `target/debug/WinNexus.exe` ve release dışındaki tüm `WinNexus.exe` dosyalarını siler. Böylece release dışında derleme uygulaması kalmaz; `target` yalnızca Cargo önbelleği ve test çıktılarını taşır.
+- Artefakt olarak klasörde yalnızca en güncel derleme kalır: `WinNexus_beta-vYYYYMMDDHHMM.exe` ve aynı adlı `.sha256` özeti. Yeni artefakt doğrulanmadan önceki dosya silinmez; eski damgalı dosyalar yeni derleme doğrulandıktan sonra temizlenir.
 - `settings.toml`, `veri/` ve günlük dosyaları uygulamanın çalışma zamanı verisidir; artefaktın parçası değildir ve dağıtılmaz.
 
 Resmi sürüm, `v*` etiketi itildiğinde `.github/workflows/release.yml` tarafından üretilir:
