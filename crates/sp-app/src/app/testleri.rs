@@ -72,28 +72,18 @@ fn surum_beta_etiketi() {
 
 #[test]
 fn arama_gerektiren_arac_sayfalari() {
-    for sayfa in [
+    let beklenen = [
         Sayfa::WindowsGuncelleme,
         Sayfa::TarayiciUzantilari,
         Sayfa::DosyaKayitBulucu,
         Sayfa::ZorlaKaldir,
         Sayfa::BaglantiYoneticisi,
-    ] {
-        assert!(
+    ];
+    for sayfa in Sayfa::HEPSI {
+        assert_eq!(
             sayfa.arac_aramasi_gerekli(),
-            "{} arama girdisi istemeli",
-            sayfa.baslik()
-        );
-    }
-    for sayfa in [
-        Sayfa::KurulumIzleme,
-        Sayfa::DiskAnalisti,
-        Sayfa::Temizlik,
-        Sayfa::Bakim,
-    ] {
-        assert!(
-            !sayfa.arac_aramasi_gerekli(),
-            "{} arama girdisi istememeli",
+            beklenen.contains(&sayfa),
+            "{} için arama gereksinimi beklenen kümeyle uyuşmuyor",
             sayfa.baslik()
         );
     }

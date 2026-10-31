@@ -41,6 +41,7 @@ impl SidebarItem for YanMenuOgesi {
         let buton = Button::new(id)
             .with_size(gpui_kit::component::Size::Small)
             .w_full()
+            .h(px(DOKUNMA_HEDEFI_PX))
             .accessibility_label(self.sayfa.menu_baslik())
             .child(icerik);
         let buton = if self.aktif {

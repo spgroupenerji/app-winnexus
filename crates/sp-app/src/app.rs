@@ -8025,28 +8025,28 @@ impl WinNexusApp {
         if let Some(hata) = &self.donanim_hata {
             icerik = icerik.child(self.hata_kutusu(hata, cx));
         }
-        let eylemler = h_flex()
-            .gap_2()
-            .child(
-                Button::new("donanim-ozet-oku")
-                    .primary()
-                    .label(if self.donanim_taraniyor {
-                        "Okunuyor..."
-                    } else if veri_var {
-                        "Yenile"
-                    } else {
-                        "Donanım Bilgilerini Oku"
-                    })
-                    .disabled(self.donanim_taraniyor)
-                    .on_click(cx.listener(|this, _, _, cx| this.donanim_tara(cx))),
-            )
-            .child(
+        let mut eylemler = h_flex().gap_2().child(
+            Button::new("donanim-ozet-oku")
+                .primary()
+                .label(if self.donanim_taraniyor {
+                    "Okunuyor..."
+                } else if veri_var {
+                    "Yenile"
+                } else {
+                    "Donanım Bilgilerini Oku"
+                })
+                .disabled(self.donanim_taraniyor)
+                .on_click(cx.listener(|this, _, _, cx| this.donanim_tara(cx))),
+        );
+        if veri_var {
+            eylemler = eylemler.child(
                 Button::new("donanim-ozet-ayrinti")
                     .label("Ayrıntılar")
                     .on_click(cx.listener(|this, _, window, cx| {
                         this.sayfaya_git(Sayfa::Donanim, window, cx);
                     })),
             );
+        }
         self.bolum_karti(
             "Donanım Özeti".to_string(),
             "Sistem, işlemci, ekran kartı, bellek ve disk özeti; ayrıntılar Donanım sayfasında."
