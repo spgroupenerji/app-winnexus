@@ -20,5 +20,5 @@ sp-core = { path = "../sp-core" }
 sp-win = { path = "../sp-win" }
 tracing.workspace = true
 tracing-subscriber.workspace = true
-rfd = "0.17"
+rfd = "0.18"
 raw-window-handle.workspace = true
